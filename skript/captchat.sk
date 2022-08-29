@@ -1,0 +1,30 @@
+on first join:
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&4[Fondateur]":
+		wait 2 seconds
+		set {valid.%player%} to false
+		set {ramdom.%player%} to a random integer from 1 to 10
+		if {valid.%player%} is false:
+			if {ramdom.%player%} is between 1 and 10:
+				open chest with 5 rows named "             &4CAPTCHA             " to player
+				wait 2 ticks
+				format slot 3 of player with red wool named "Je ne suis pas un robot" with lore "Capchat" to close then run [make console execute "/valid %player%"]
+				if {valide.%player%} is true:
+					stop
+				wait 20 seconds
+				send "&bTu as &e20 &bsecondes pour répondre au &cCAPTCHAT &bavant d'être &ckick &bdu serveur" to player
+				wait 20 seconds
+				if {valide.%player%} is false:
+					kick player due to "&cTU DOIS PROUVER QUE TU N ES PAS UN ROBOT"
+
+command /valid [<player>]:
+	executable by:console
+	trigger:
+		if {valid.%arg 1%} is false:
+			set {valid.%arg 1%} to true
+			message "&2=====================================================" to arg 1
+			message "" to arg 1
+			message "                                 &cCAPTCHA &avalidé                                " to arg 1
+			message "                                 &aServeur &b1.12.2                              " to arg 1
+			message "" to arg 1
+			message "&2=====================================================" to arg 1
+			

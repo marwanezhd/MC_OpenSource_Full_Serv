@@ -1,0 +1,182 @@
+options:               
+	tabHeader: "   &a&lAMNESTIA &8[&2&lSURVIE &8/ &c&lPVP&8] %nl%"
+	tabFooterHub: " %nl%&b/menu &epour acceder au &bmenu principal%nl%%nl%&6================================== %nl%&6Amnestia.fr%nl%=================================="
+
+command /guildedelete [<offline player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			clear {claim.%chunk at player%::*}
+			delete {claim.%chunk at player%::*}
+			#remove {claim.%chunk at player%::arg 1} to {claimlist.%arg 1%::*}
+			send "&cle claim de &b%arg 1% &cà été supprimé" to player
+	
+command /guilde [<text>] [<offline player>]:
+	trigger:
+		if player is in world "world" or "loby":
+			if arg 1 is "create":
+				if {guilde.%player%::owner} is not set:
+					send "&aLa Guilde %arg 2% à bien été crée" to player
+					add 1 to {joueur_guilde.%player%}
+					set {guilde.%player%::owner} to "%player%"
+					set {guilde_name.%player%} to "%arg 2%"
+					add {guilde_name.%player%} to {guilde_liste::*}
+					set nametag of player to "&6[%{guilde_name.%player%}%] &a%{pseudo_ig.%player%}%"				
+					loop all players:
+						set tab header to {@tabHeader} and footer to {@tabFooterHub} for loop-player
+						set loop-player tab name to "%{grade.%uuid of loop-player%}% &e%loop-player%"
+						if {amount of players} <= 10:
+							set amount of columns in player's array tablist to 0
+						if {amount of players} > 10:
+							set amount of columns in player's array tablist to 1
+					stop
+				if {guilde.%player%::owner} is set:
+					send "&cVous avez déja une guilde"
+					stop
+			if arg 1 is "add":
+				if {guilde.%player%::owner} is not set:
+					send "&cvous n avez pas de guilde"
+					stop
+				if {guilde.%player%::owner} is set:
+					if {guilde.%player%::owner} is not "%player%":
+						send "&cVous devez être le chef de guilde pour inviter des membres"
+						stop
+					if {guilde.%player%::owner} is "%player%":
+						if arg 2 is set:
+							add "%arg 2%" to {guilde_membre.%{guilde_name.%player%}%::*}
+							set {guilde_name.%arg 2%} to {guilde_name.%player%}
+							send "&aTu as ajouté %arg-2% a la guilde"
+							send "&a%player% vous a fait rejoindre sa guilde" to arg-2
+							set nametag of arg 2 to "&6[%{guilde_name.%arg 2%}%] &a%{pseudo_ig.%arg 2%}%"
+							loop all players:
+								set tab header to {@tabHeader} and footer to {@tabFooterHub} for loop-player
+								set loop-player tab name to "%{grade.%uuid of loop-player%}% &e%loop-player%"
+								if {amount of players} <= 10:
+									set amount of columns in player's array tablist to 0
+								if {amount of players} > 10:
+									set amount of columns in player's array tablist to 1
+						else:
+							send "&cEntrer le pseudo du joueur à ajouter a la guilde"
+			if arg 1 is "remove":
+				if {guilde.%player%::owner} is not set:
+					send "&cCette n existe pas!"
+					stop
+				if {guilde.%player%::owner} is set:
+					if {guilde.%player%::owner} is not "%player%":
+						send "&cVous devez etre le cheff de guilde pour virer un joueur"
+						stop
+					if {guilde.%player%::owner} is "%player%":
+						if arg 2 is set:
+							remove arg 2 from {guilde_membre.%{guilde_name.%player%}%::*}
+							delete {guilde_name.%arg 2%}
+							set sender's nametag to "&a%{pseudo_ig.%arg 2%}%"
+							send "&aTu as viré %arg-2% de la guilde!"
+							send "&aTu as été viré de la guilde %{guilde.%player%::owner}%" to arg-2
+							set nametag of arg 2 to "&a%{pseudo_ig.%arg 2%}%"
+							loop all players:
+								set tab header to {@tabHeader} and footer to {@tabFooterHub} for loop-player
+								set loop-player tab name to "%{grade.%uuid of loop-player%}% &e%loop-player%"
+								if {amount of players} <= 10:
+									set amount of columns in player's array tablist to 0
+								if {amount of players} > 10:
+									set amount of columns in player's array tablist to 1
+						else:
+							send "&cEntrer le pseudo du joueur virer de la guilde!"
+			if arg 1 is "info":
+				if {guilde.%player%::owner} is not set:
+					send "&cCette guilde n'éxiste pas!"
+				else:
+					send "&aChef de guilde: &2%{guilde.%player%::owner}%"
+					send "&aMembres de la guilde:"
+					if {guilde_membre.%player%::*} is set:
+						send "&2%{guilde_membre.%{guilde_membre.%{guilde_name.%player%}%::*}%"
+					else:
+						send "&2personne!"
+			if arg 1 is "delete":
+				if {guilde.%player%::owner} is not set:
+					send "&cCette guilde n'existe pas"
+					stop
+				if {guilde.%player%::owner} is set:
+					if {guilde.%player%::owner} is not "%player%":
+						send "&cSeul le Chef de guilde peut supprimer la guilde!"
+						stop
+					if {guilde.%player%::owner} is "%player%":
+						set {_exguilde.%player%} to "%{guilde_name.%player%}%"
+						remove {guilde_name.%player%} from {guilde_liste::*}
+						loop all players:
+							if {guilde_name.%loop-player%} is "%{_exguilde.%player%}%":
+								delete {guilde_name.%loop-player%}
+								send "&aLa guilde &e%{_exguilde.%player%}% &aa été dissoute" to loop-player
+								set nametag of loop-player to "&a%{pseudo_ig.%loop-player%}%"
+						delete {guilde.%player%::owner}
+						loop all players:
+							set tab header to {@tabHeader} and footer to {@tabFooterHub} for loop-player
+							set loop-player tab name to "%{grade.%uuid of loop-player%}% &e%loop-player%"
+							if {amount of players} <= 10:
+								set amount of columns in player's array tablist to 0
+							if {amount of players} > 10:
+								set amount of columns in player's array tablist to 1
+			if arg 1 is not set:
+				send "&cCommande inconnue"
+		else:
+			message "&cVous n'avez pas accès à cette commande dans se monde"
+	
+on join:
+	if {guilde_liste::*} contains {guilde_name.%player%}:
+		stop
+	else:
+		delete {guilde_name.%player%}
+		set nametag of player to "&a%{pseudo_ig.%player%}%"		
+		loop all players:
+			set tab header to {@tabHeader} and footer to {@tabFooterHub} for loop-player
+			set loop-player tab name to "%{grade.%uuid of loop-player%}% &e%loop-player%"
+			if {amount of players} <= 10:
+				set amount of columns in player's array tablist to 0
+			if {amount of players} > 10:
+				set amount of columns in player's array tablist to 1
+
+command /guilde invite [<player>]:
+	trigger:
+		if world is "world" or "world_the_end" or "world_nether":
+			if arg-1 is player:
+				send "&btu ne peux pas t'inviter toi-meme dans ta propre guilde"
+				stop
+			if arg-1 is not set:
+				send "&b/guilde &eadd &6<pseudo>"
+			else if arg-1 is set:
+				if arg-1 is online:
+					else:
+						Send "&a%player% &bvous invite a rejoindre la guilde %{guilde_name.%player%}%" to arg-1
+						Send "&binvitation guilde envoyée à &a%arg 1%" to player
+						set {inviteur.%arg-1%.guilde} to player
+						set {guilde.%arg-1%.request} to true
+				else if arg-1 is offline:
+					send "&a%{%arg 1%}% &best &cdéconnecté"
+		else:
+			set action bar of player to "&cTu ne peux pasfaire ca dans se monde"
+					
+command /guilde accept:
+	trigger:
+		if world is "world" or "world_the_end" or "world_nether":
+			if {guilde.%player%.request} is true:			
+				if {inviteur.%player%.guilde} is set:
+					send "&bvous avez rejoin &e%{guilde_name.%player%}%" to {inviteur.%player%.guilde}
+					send "&a%{inviteur.%player%.guilde}% &bà été &ctéléporté &bà vous" to player
+					clear {inviteur.%player%.guilde}
+					clear {guilde.%player%.request}
+					stop
+				else:
+					send "&caucune proposition de guilde active" to player
+		else:
+			set action bar of player to "&cTu ne peux pas faire ca dans se monde"
+			
+command /guilde refuse:
+	trigger:
+		if {teleport.%player%.request} is true:
+			if {teleport.%player%.tpa} is online:
+				send "&bDemande de téléportation &crefusée"
+				send "&bDemande de téléportation &crefusée" to {inviteur.%player%.guilde}
+				clear {inviteur.%player%.guilde}
+				clear {guilde.%player%.request}
+				stop
+		else:
+			send "&caucune &bdemande de téléportation"

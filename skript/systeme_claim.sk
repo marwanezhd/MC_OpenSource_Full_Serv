@@ -1,0 +1,224 @@
+command /claimdelete [<offline player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			clear {claim.%chunk at player%::*}
+			delete {claim.%chunk at player%::*}
+			#remove {claim.%chunk at player%::arg 1} to {claimlist.%arg 1%::*}
+			send "&cle claim de &b%arg 1% &cà été supprimé" to player
+	
+command /claim [<text>] [<offline player>]:
+	trigger:
+		if player is in world "world":
+			if arg 1 is "claim":
+				if {nb_claim.%player%} >= 80:
+					send "&bvous avez déja atteint le nombre de claim maximum &c({nb_claim.%player%}/80)" to player
+					stop
+				if {claim.%chunk at player%::owner} is not set:
+					send "&aLe chunk a bien été claim!" to player
+					add 1 to {nb_claim.%player%}
+					add 16*2 to {surfaceclaim.%player%}
+					send "&bVous avez &b(&e%{surfaceclaim.%player%}% &b/ &d2560 &bblocks disponibles ) &6%{nb_claim.%player%}% &b/ &c80 &bclaims" to player
+					set {claim.%chunk at player%::owner} to "%player%"
+					add {claim.%chunk at player%::owner} to {claimlist.%player%::*}
+					add location of player to {claimlist.%player%::*}
+					send "&eliste de vos claims &c: &b%{claimlist.%player%::*}%" to player
+					stop
+				if {claim.%chunk at player%::owner} is set:
+					send "&cCe chunk est déja claim!"
+					stop				
+			if arg 1 is "add":
+				if {claim.%chunk at player%::owner} is not set:
+					send "&cVous ne pouvez pas faire ca!"
+					stop
+				if {claim.%chunk at player%::owner} is set:
+					if {claim.%chunk at player%::owner} is not "%player%":
+						send "&cCette zone ne vous apartient pas!"
+						stop
+					if {claim.%chunk at player%::owner} is "%player%":
+						if arg 2 is set:
+							add "%arg-2%" to {players.%chunk at player%::*}
+							send "&aTu as ajouté %arg-2% to your chunk!"
+							send "&a%player% vous à ajouter a son claim" to arg-2
+						else:
+							send "&cEntrer le pseudo du joueur à ajouter au claim!"
+			if arg 1 is "remove":
+				if {claim.%chunk at player%::owner} is not set:
+					send "&cCette zone n'est pas claim!"
+					stop
+				if {claim.%chunk at player%::owner} is set:
+					if {claim.%chunk at player%::owner} is not "%player%":
+						send "&cCette zone ne vous apartient pas!"
+						stop
+					if {claim.%chunk at player%::owner} is "%player%":
+						if arg 2 is set:
+							remove arg 2 from {players.%chunk at player%::*}
+							send "&aTu as retiré %arg-2% du claim!"
+							send "&aTu as été retiré du claim de %player%" to arg-2
+						else:
+							send "&cEntrer le pseudo du joueur a ajouter!"
+			if arg 1 is "info":
+				if {claim.%chunk at player%::owner} is not set:
+					send "&cCe chunk n'a jamais été claim!"
+				else:
+					send "&aPropriétaire: &2%{claim.%chunk at player%::owner}%"
+					send "&aMembres du claim:"
+					if {players.%chunk at player%::*} is set:
+						send "&2%{players.%chunk at player%::*}%"
+					else:
+						send "&2personne!"
+			if arg 1 is "unclaim":
+				if {claim.%chunk at player%::owner} is not set:
+					send "&cIl n'y a pas de claim sur ce chunk"
+					stop
+				if {claim.%chunk at player%::owner} is set:
+					if {claim.%chunk at player%::owner} is not "%player%":
+						if {players.%chunk at player%::*} contains "%player%":
+							send "&cSeul le propriétaire du claim peut effectuer cette action!"
+						else:
+							send "&cCe claim ne t'appartient pas!"
+							stop
+					if {claim.%chunk at player%::owner} is "%player%":
+						delete {claim.%chunk at player%::owner}
+						send "&aCe chunk n'est plus protégé!"
+						stop
+			if arg 1 is not set:
+				send "&cCommande inconnue , essaye /claim help"
+			
+			if arg 1 is "help":
+				send "&a/claim claim &7- Claims le chunk"
+				send "&a/claim unclaim &7- supprime le claim"
+				send "&a/claim add <Player> &7- Ajoute un joueur a votre claim"
+				send "&a/claim remove <player> &7- Retire un joueur du claim!"
+				send "&a/claim info &7- Affiche les informations du chunk!"
+		else:
+			message "&cVous n'avez pas accès à cette commande en dehors du monde &bsurvie"
+			
+on right click on shulker box:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop
+			
+on right click on anvil:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop
+			
+on right click on hopper:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop
+						
+on right click on dispenser:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop
+			
+on right click on brewing stand:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop	
+	
+on right click on bed:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop
+
+on right click on furnace:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop
+
+on right click on chest:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop
+			
+on break:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop
+		
+on place:
+	if {players.%chunk at player%::*} contains "%player%":
+		stop
+	if {claim.%chunk at event-block%::owner} is set:
+		if {claim.%chunk at event-block%::owner} is "%player%":
+			if {players.%chunk at event-block%::*} contains "%player%":
+				stop
+		else:
+			cancel event
+			set action bar of player to "&cCe claim ne t'appartiens pas"
+	else:
+		stop

@@ -1,0 +1,6 @@
+on damage:
+#	if attacker's gamemode is adventure:
+	send action bar from "&e%victim% &7[&6%health of victim%&7] &c❤" to attacker
+	
+on damage:
+	send red tint to victim with fadeTime 3, intensity 2 and damageMode true

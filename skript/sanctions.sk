@@ -1,0 +1,428 @@
+command /sanction [<offline player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]" or "&9[Chef-Modérateur]" or "&3[Modérateur]":
+			if arg 1 is not set:
+				send "&6Usage : &b/sanction <pseudo>"
+				stop 
+			open chest with 1 rows named "       &cSanctionner &b%arg 1%" to player
+			wait 2 ticks
+			format slot 2 of player with yellow wool named "&eAvertir" with lore "&bListe des Avertissements" to run [make console execute "/menuavert %player% %arg 1%"]
+			format slot 4 of player with orange wool named "&6Mute" with lore "&bListe des Mutes" to run [make console execute "/menumute %player% %arg 1%"]
+			format slot 6 of player with red wool named "&cBannir" with lore "&bListe des Bans" to run [make console execute "/menuban %player% %arg 1%"]
+			
+command /menuavert <player> [<offline player>]:
+	executable by:console
+	trigger:
+		open chest with 5 rows named "       &cAvertir &b%arg 2%" to arg 1
+		wait 2 ticks
+		format slot 0 of arg 1 with yellow wool named "&eLangage" with lore "&bAutre langue dans le tchat||&bVulgarité" to run [make console execute ""]
+		format slot 2 of arg 1 with yellow wool named "&eSpam" with lore "&bSpam léger" to run [make console execute ""]
+			
+command /menumute <player> [<offline player>]:
+	executable by:console
+	trigger:
+		open chest with 5 rows named "       &cMute &b%arg 2%" to arg 1
+		wait 2 ticks
+		format slot 0 of arg 1 with yellow wool named "&epetit flood" with lore "&b10 minutes" to run [make console execute ""]
+		format slot 1 of arg 1 with yellow wool named "&egros flood" with lore "&b3 heures" to run [make console execute ""]
+		format slot 2 of arg 1 with yellow wool named "&ePetit Spam mp" with lore "&b15 minutes" to run [make console execute ""]
+		format slot 3 of arg 1 with yellow wool named "&eGros Spam mp" with lore "&b1 heure" to run [make console execute ""]
+		format slot 4 of arg 1 with yellow wool named "&eInsultes minimes" with lore "&b30 minutes" to run [make console execute ""]
+		format slot 5 of arg 1 with yellow wool named "&eInsultes intermédiaires" with lore "&b2 heures" to run [make console execute ""]
+		format slot 6 of arg 1 with yellow wool named "&ePetit Troll staff (tchat)" with lore "&b1 heure" to run [make console execute ""]
+		format slot 7 of arg 1 with yellow wool named "&ePetite Provocation joueur" with lore "&b15 minutes" to run [make console execute ""]
+		format slot 8 of arg 1 with yellow wool named "&eProvocation joueur répété" with lore "&b1 heure" to run [make console execute ""]
+		format slot 9 of arg 1 with yellow wool named "&ePropos tendancieux" with lore "&b1 heure" to run [make console execute ""]
+
+command /menuban <player> [<offline player>]:
+	executable by:console
+	trigger:
+		open chest with 5 rows named "       &cBan &b%arg 2%" to arg 1
+		wait 2 ticks
+		format slot 0 of arg 1 with yellow wool named "&eInsultes grâves" with lore "&b6 heures" to run [make console execute "/baninsultesgraves %arg 1% %arg 2% Insultes grâves 2"]
+		format slot 1 of arg 1 with yellow wool named "&eGros Troll staff (tchat)" with lore "&b6 heures" to run [make console execute "/bangrostrollstafftchat %arg 1% %arg 2% Gros Troll staff (tchat) <number>"]
+		format slot 2 of arg 1 with yellow wool named "&eProvocations Joueur inssaissantes" with lore "&b3 heures" to run [make console execute "/banprovocjoueurinssaissantes %arg 1% %arg 2% Provocations Joueur inssaissantes <number>"]
+		format slot 3 of arg 1 with yellow wool named "&ePollution HDV" with lore "&b1 jour" to run [make console execute "/banpollutionhdv %arg 1% %arg 2% Pollution HDV <number>"]
+		format slot 4 of arg 1 with yellow wool named "&eIncitation et diffamation" with lore "&b3 jours" to run [make console execute "/banincitationdiffamation %arg 1% %arg 2% Incitation et diffamation <number>"]
+		format slot 5 of arg 1 with yellow wool named "&eMenace de Hack" with lore "&b7 jours" to run [make console execute "/banmenacehack %arg 1% %arg 2% Menace de Hack <number>"]
+		format slot 6 of arg 1 with yellow wool named "&eHarcèllement" with lore "&b7 jours" to run [make console execute "/banharcellement %arg 1% %arg 2% Harcèllement <number>"]
+		format slot 7 of arg 1 with yellow wool named "&eRacisme" with lore "&b7 jours" to run [make console execute "/banracisme %arg 1% %arg 2% Racisme <number>"]
+		format slot 8 of arg 1 with yellow wool named "&ePropos sexuels" with lore "&b7 jours" to run [make console execute "/banpropossexuels %arg 1% %arg 2% Propos sexuels <number>"]
+		format slot 9 of arg 1 with yellow wool named "&ePseudo Inapproprié" with lore "&b30 Jours" to run [make console execute "/banpseudoinapproprié %arg 1% %arg 2% Pseudo Inapproprié <number>"]
+		format slot 10 of arg 1 with yellow wool named "&eCheat minage" with lore "&b30 jours" to run [make console execute "/bancheatminage %arg 1% %arg 2% Cheat minage <number>"]
+		format slot 11 of arg 1 with yellow wool named "&echeat pvp" with lore "&b30 jours" to run [make console execute "/bancheatpvp %arg 1% %arg 2% cheat pvp <number>"]
+		format slot 12 of arg 1 with yellow wool named "&efly" with lore "&b30 jours" to run [make console execute "/banfly %arg 1% %arg 2% fly <number>"]
+		format slot 13 of arg 1 with yellow wool named "&ePortail nether piégé" with lore "&b1 jour" to run [make console execute "/banportailnetherpiege %arg 1% %arg 2% Portail nether piégé <number>"]
+		format slot 14 of arg 1 with yellow wool named "&eMachine anti-AFK" with lore "&b3 jours" to run [make console execute "/banantiafk %arg 1% %arg 2% Machine anti-AFK <number>"]
+		format slot 15 of arg 1 with yellow wool named "&eUse Bug" with lore "&b7 jours" to run [make console execute "/banusebug %arg 1% %arg 2% Use Bug <number>"]
+		format slot 16 of arg 1 with yellow wool named "&eGros Troll staff (jeu)" with lore "&b7 jours" to run [make console execute "/bangrostrollstaffjeu %arg 1% %arg 2% Gros Troll staff (jeu) <number>"]
+		format slot 17 of arg 1 with yellow wool named "&ekill hors pvp ( items rendu )" with lore "&b2 jours" to run [make console execute "/bankillhorspvpir %arg 1% %arg 2% kill hors pvp ( items rendu ) <number>"]
+		format slot 18 of arg 1 with yellow wool named "&ekill hors pvp ( items non rendu)" with lore "&b4 jours" to run [make console execute "/bankillhorspvpinr %arg 1% %arg 2% kill hors pvp ( items non rendu) <number>"]
+		format slot 19 of arg 1 with yellow wool named "&eVol-Grief-Arnaque (items rendu)" with lore "&b2 jours" to run [make console execute "/banvolgriefarnaqueir %arg 1% %arg 2% Vol-Grief-Arnaque (items rendu) <number>"]
+		format slot 20 of arg 1 with yellow wool named "&eVol-Grief-Arnaque (items non rendu)" with lore "&b4 jours" to run [make console execute "/banvolgriefarnaqueinr %arg 1% %arg 2% Vol-Grief-Arnaque (items non rendu) <number>"]
+		format slot 21 of arg 1 with yellow wool named "&ePetit NR staff/serv" with lore "&b1 jour" to run [make console execute "/banpetitnrstaffserv %arg 1% %arg 2% Petit NR staff/serv <number>"]
+		format slot 22 of arg 1 with yellow wool named "&eNR staff/serv intermédiaire" with lore "&b2 jours" to run [make console execute "/bannrstaffservintermediaire %arg 1% %arg 2% NR staff/serv intermédiaire <number>"]
+		format slot 23 of arg 1 with yellow wool named "&eGros NR staff/serv" with lore "&b3 jours" to run [make console execute "/bangrosnrstaffserv %arg 1% %arg 2% Gros NR staff/serv <number>"]
+		format slot 24 of arg 1 with yellow wool named "&ePetite Provoc Staff" with lore "&b1 jour" to run [make console execute "/banpetiteprovocstaff %arg 1% %arg 2% Petite Provoc Staff <number>"]
+		format slot 25 of arg 1 with yellow wool named "&eGrosse Provoc Staff" with lore "&b3 jour" to run [make console execute "/bangrosseprovocstaff %arg 1% %arg 2% GrosseProvocStaff 3"]
+
+command /baninsultesgraves <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 6 hours
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /bangrostrollstafftchat <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 6 hours
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banprovocjoueurinssaissantes <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 3 hours
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banpollutionhdv <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 1 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banincitationdiffamation <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 3 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banmenacehack <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 7 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banharcellement <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 7 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banracisme <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 7 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banpropossexuels <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 7 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banpseudoinapproprié <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 30 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /bancheatminage <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 30 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /bancheatpvp <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 30 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banfly <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 30 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banportailnetherpiege <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 1 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banantiafk <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 3 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banusebug <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 7 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /bangrostrollstaffjeu <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 7 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /bankillhorspvpir <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 2 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /bankillhorspvpinr <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 4 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banvolgriefarnaqueir <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 2 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banvolgriefarnaqueinr <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 4 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banpetitnrstaffserv <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 1 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 		
+
+command /bannrstaffservintermediaire <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 2 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /bangrosnrstaffserv <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 3 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /banpetiteprovocstaff <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 1 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /bangrosseprovocstaff <player> [<offline player>] <text> <number>:
+	executable by:console
+	trigger:
+		if {grade.%uuid of arg 1%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 3 days
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &cRaison &7: &e%{motif_ban.%arg 2%}%" 
+		
+command /warn <player> [<offline player>] <text>:
+	#executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {motif_warn.%arg 2%} to arg 3
+			set {modo_warn.%arg 2%} to arg 1
+			wait 2 ticks
+			send "&btu as été &cavertis &bpar &6%{modo_warn.%arg 2%}% &bRaison : %{motif_warn.%arg 2%}%" to arg 2	
+			add 1 to {warn.%arg 2%}
+
+command /mute <player> [<offline player>] <text> <number>:
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_mute.%arg 2%} to now
+			set {time_mute.%arg 2%} to 1 minutes
+			set {motif_mute.%arg 2%} to arg 3
+			set {modo_mute.%arg 2%} to arg 1
+			wait 2 ticks
+			send "&btu as été &cmute &bpar &6%{modo_mute.%arg 2%}% &ble %{moment_mute.%arg 2%}% &bpour une &cdurée &bde %{time_mute.%arg 2%}% &bRaison : &e%{motif_mute.%arg 2%}%" to arg 2
+		
+command /ban <player> [<offline player>] <text> <number>:
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {moment_ban.%arg 2%} to now
+			set {time_ban.%arg 2%} to 1 minutes
+			set {motif_ban.%arg 2%} to arg 3
+			set {modo_ban.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &cbanni &bpar &6%{modo_ban.%arg 2%}% &ble &6%{moment_ban.%arg 2%}% &bpour une &cdurée &bde &6%{time_ban.%arg 2%}% &bRaison : %{motif_ban.%arg 2%}%" 
+		
+command /kick <player> [<offline player>] <text>:
+	#executable by:console
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			set {motif_kick.%arg 2%} to arg 3
+			set {modo_kick.%arg 2%} to arg 1
+			wait 2 ticks
+			kick arg 2 due to "&btu as été &ckick &bpar &6%{modo_ban.%arg 2%}% &bMotif : &e%{motif_ban.%arg 2%}%" 
+
+command /desct [<offline player>]:
+	trigger:
+		delete {moment_sanction.%arg 1%}
+		delete {time_sanction.%arg 1%}
+		delete {time_ban.%arg 1%}
+
+		
+on join:
+	if {time_ban.%player%} is false:
+		stop
+	if {time_ban.%player%} is set:
+		set {_verif_sanction} to difference between {moment_ban.%player%} and now
+		if {_verif_sanction} >=  {time_ban.%player%}:
+			delete {time_ban.%player%}
+			delete {moment_ban.%player%}
+			send "&cTa période de sanction est terminée , veille à ne pas recommencer !" to player
+			send "&2Bon jeu sur Amnestia !" to player
+			stop
+		else:
+			kick player due to "&btu as été &cbanni &bpar &6%{modo_ban.%player%}% &ble &6%{moment_ban.%player%}% &bpour une &cdurée &bde &6%{time_ban.%player%}% &bRaison : &e%{motif_ban.%player%}%"
+			stop
+	else:
+		stop
+
+
+
+
+
+
+
+
+
+
+
+

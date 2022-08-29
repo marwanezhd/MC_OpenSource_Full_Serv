@@ -1,0 +1,13 @@
+options:
+	EnderCooldown: 5 seconds
+	EnderMessage: &cTu dois attendre 5 secondes entre chaques EnderPearl !
+	
+on rightclick holding a ender pearl:
+	if player is in "pvp" or "world":
+		set {_waited} to difference between {enderpearl.%player%.lastused} and now
+		if {_waited} is less than {@EnderCooldown}:
+			cancel event
+			set action bar of player to "{@EnderMessage}"
+			wait 5 ticks
+		else:
+			set {enderpearl.%player%.lastused} to now

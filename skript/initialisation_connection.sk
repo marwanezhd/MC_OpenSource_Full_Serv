@@ -1,0 +1,45 @@
+on first join:
+	set {lvl_job1.%player%} to 1
+	set {lvl_job2.%player%} to 1	
+	wait 1 ticks
+	set {xp_job1.%player%} to 0
+	set {xp_job2.%player%} to 0
+	wait 1 ticks	
+	set {xpjob1.%player%} to 0	
+	set {xpjob2.%player%} to 0	
+	set {xpmaxlvljob1.%player%} to 0
+	set {xpmaxlvljob2.%player%} to 0
+	wait 1 ticks
+	set {job1.%player%} to false
+	set {job2.%player%} to false
+	wait 1 ticks
+	set {nb_job.%player%} to 0
+	wait 1 ticks
+	set {grade.%uuid of player%} to "&a[Joueur]"
+	wait 1 ticks
+	set {grade.%uuid of player%} to "&a[Joueur]"
+	wait 1 ticks
+	wait 2 ticks
+	teleport player to {warp.loby}
+	set {back.%player%} to {warp.loby}
+	wait 1 ticks
+	set {back.%player%} to {warp.loby}
+	wait 1 ticks
+	set {po.%uuid of player%} to 300
+	wait 1 ticks
+	set {count_home.%player%} to 0
+	clear {homelist.%player%::*}
+	wait 1 ticks
+	set {surfaceclaim.%player%} to 0
+	set {nb_claim.%player%} to 0
+	clear {claimlist.%player%::*}	
+	wait 1 ticks
+	clear {ami.%player's uuid%::*}	
+		
+on join:	
+	teleport player to {warp.loby}
+	set {back.%player%} to {warp.loby}
+
+on join:
+	if {point_flagg_controle_pvp.%player%} is not set:
+		set {point_flagg_controle_pvp.%player%} to 0

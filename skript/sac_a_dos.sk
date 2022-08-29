@@ -1,0 +1,46 @@
+command /sac:
+	trigger:
+		open chest with 3 rows named "Sac a dos" to player
+		wait 2 ticks
+		format slot 10 of player with chest named "&3Sac &21" with lore "Accédez au Sac 1" to run [make player execute "/sac1"]
+		format slot 12 of player with chest named "&3Sac &22" with lore "Accédez au Sac 2" to run [make player execute "/sac2"]
+		format slot 14 of player with chest named "&3Sac &23" with lore "Accédez au Sac 3" to run [make player execute "/sac3"]
+		format slot 16 of player with chest named "&3Sac &24" with lore "Accédez au Sac 4" to run [make player execute "/sac4"]
+			
+command /sac1:
+	trigger:
+		set {_sac} to chest with 6 rows named "&4Sac &6|| &3Sac &21 &6||"
+		if {container::&4Sac &6|| &3Sac &21 &6||::%player%} is set:
+			set {_sac}'s serialized contents to {container::&4Sac &6|| &3Sac &21 &6||::%player%}
+		open {_sac} to player
+		set {container::current::%player%} to "&4Sac &6|| &3Sac &21 &6||"
+		
+command /sac2:
+	trigger:
+		set {_sac} to chest with 6 rows named "&4Sac &6|| &3Sac &22 &6||"
+		if {container::&4Sac &6|| &3Sac &22 &6||::%player%} is set:
+			set {_sac}'s serialized contents to {container::&4Sac &6|| &3Sac &22 &6||::%player%}
+		open {_sac} to player
+		set {container::current::%player%} to "&4Sac &6|| &3Sac &22 &6||"
+		
+command /sac3:
+	trigger:
+		set {_sac} to chest with 6 rows named "&4Sac &6|| &3Sac &23 &6||"
+		if {container::&4Sac &6|| &3Sac &23 &6||::%player%} is set:
+			set {_sac}'s serialized contents to {container::&4Sac &6|| &3Sac &23 &6||::%player%}
+		open {_sac} to player
+		set {container::current::%player%} to "&4Sac &6|| &3Sac &23 &6||"
+		
+command /sac4:
+	trigger:
+		set {_sac} to chest with 6 rows named "&4Sac &6|| &3Sac &24 &6||"
+		if {container::&4Sac &6|| &3Sac &24 &6||::%player%} is set:
+			set {_sac}'s serialized contents to {container::&4Sac &6|| &3Sac &24 &6||::%player%}
+		open {_sac} to player
+		set {container::current::%player%} to "&4Sac &6|| &3Sac &24 &6||"
+		
+on inventory close:
+	if {container::current::%player%} is set:
+		if "%event-inventory%" is "inventory of <none>":
+			set {container::%{container::current::%player%}%::%player%} to event-inventory's serialized contents
+			clear {container::current::%player%}

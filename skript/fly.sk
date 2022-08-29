@@ -1,0 +1,27 @@
+command /fly:
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]" or "&4[Fondateur]" or "&c[Administrateur]" or "&3[Modérateur]":
+			if world is "world":
+				if player's flight mode is false:
+					set player's flight mode to true
+					send "&bFly &2Activé" to player
+					stop
+				if player's flight mode is true:
+					set player's flight mode to false
+					send "&bFly &cDésactivé" to player
+					stop
+			else:
+				send "&6Tu ne peux pas &bFly &6en dehors du monde &2Survie" to player
+						
+on quit:
+	set player's flight mode to false
+	
+on join:
+	set player's flight mode to false
+	
+every 5 minutes:
+	loop all players:
+		if loop-player's flight mode is true:
+			if loop-player's world is "world_the_end":
+				set loop-player's flight mode to false
+				send "&bFly &cDésactivé" to loop-player

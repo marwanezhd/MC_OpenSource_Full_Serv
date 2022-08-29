@@ -1,0 +1,26 @@
+command /rank [<offline player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]":
+			if {grade.%uuid of arg 1%} is "&4[Fondateur]" or "&c[Administrateur]":
+				send "&cVous ne pouvez pas faire cela" to player
+				stop
+			else:
+				set {grade.%uuid of arg 1%} to "&3[Modérateur]"
+				send "&bVous avez promu &2%arg 1% &3[Modérateur]" to player
+				send "&bVous avez été promu au grade &3[Modérateur] par &e%player%" to arg 1
+				stop
+
+command /derank [<offline player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&9[Chef-Modérateur]":
+			if {grade.%uuid of arg 1%} is "&3[Modérateur]" or "&e[Architecte]":
+				set {grade.%uuid of arg 1%} to "&a[Joueur]"
+				send "&bVous avez rétrogradé &2%arg 1% &bau grade de &a[Joueur]" to player
+				send "&bVous avez été rétrogradé par &e%player% &bau grade de &a[Joueur]" to arg 1
+				stop
+			else:
+				send "&cVous ne pouvez pas faire cela" to player
+				stop
+		else:
+			send "&cVous ne pouvez pas faire cela" to player
+			stop

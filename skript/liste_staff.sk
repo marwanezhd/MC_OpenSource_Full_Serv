@@ -1,0 +1,9 @@
+command /stafflist:
+	trigger:
+		send "=====================================" to player
+		send "&r " to player
+		send "&4[Fondateur][Développeur] &bENAGOLD" to player
+		send "" to player
+		send "" to player
+		send "&r " to player
+		send "=====================================" to player

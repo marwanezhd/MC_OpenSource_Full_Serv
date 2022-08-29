@@ -1,0 +1,31 @@
+command /gm <text>:
+	aliases: gamemod,gamemode
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			if arg 1 is "0":
+				set gamemode of player to survival
+				send "&bVous venez de passer en mode &dSurvie" to player
+				stop
+				
+			if arg 1 is "1":
+				set gamemode of player to Creative
+				send "&bVous venez de passer en mode &dCréatif" to player
+				stop
+				
+			if arg 1 is "2":
+				set gamemode of player to Adventure
+				send "&bVous venez de passer en mode &dAventure" to player
+				stop
+				
+			if arg 1 is "3":
+				set gamemode of player to Spectator
+				send "&bVous venez de passer en mode &dSpectateur" to player
+				stop
+				
+			else:
+				send "&btu dois faire /gm <nombre>" to player
+				
+		else:
+			send "&cVous n'avez pas la permission de changer de mode de jeu" to player
+			
+			

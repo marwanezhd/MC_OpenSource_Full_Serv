@@ -1,0 +1,82 @@
+# interdit le cassage de block dans le loby
+on break:
+	if {grade.%uuid of player%} is not "&4[Fondateur]" or "&c[Administrateur]":
+		if world is "loby" or "pvp":
+			cancel event
+	
+# bloque la pose de block dans le loby
+on place:
+	if {grade.%uuid of player%} is not "&4[Fondateur]" or "&c[Administrateur]":
+		if world is "loby" or "pvp":	
+			cancel event
+			
+# bloque le jet d items dans le loby
+on drop:
+	if {grade.%uuid of player%} is not "&4[Fondateur]" or "&c[Administrateur]":
+		if world is "loby" or "pvp":
+			cancel event
+			
+# empeche les joueurs de perdre de la barre de food dans le loby
+On Hunger meter Change:
+	if player is in world "loby":
+		set player's hunger to 10
+			
+# bloque les enders perles dans le loby			
+on rightclick holding a ender pearl:
+	if player is in world "loby":
+		cancel event
+		message "&cVous ne pouvez pas lancer d'ender pearl au spawn"
+	
+on walk on bedrock:
+	if world is "loby":
+		apply blindness to the player for 9999 seconds
+		teleport player to {warp.world}
+		wait 2 ticks
+		make player execute command "/rtp"
+		wait 2 ticks
+		execute console command "/effect %player% clear"
+			
+#PROTECTION ANTI DAMAGE JOUEURS:
+on damage:
+	if victim's world is "loby":
+		if damage cause is burning:
+			cancel event
+			stop
+		if damage cause is fall:
+			cancel event
+			stop
+		
+# BLOCKAGE SEAU D EAU ET LAVE LOBY
+
+on right click with water bucket:
+	if player's world is "loby":
+		cancel event
+		stop
+
+on right click with lava bucket:	
+	if player's world is "loby":
+		cancel event
+		stop
+	
+# bloque le briquet
+on right click with flint and steel:	
+	if player's world is "loby":
+		cancel event
+		stop
+		
+on rightclick on furnace:
+	if player's world is "loby":
+		cancel event
+		
+on right click on anvil:
+	if player's world is "loby":
+		cancel event
+		stop
+
+on rightclick on dropper:
+	if player's world is "loby":
+		cancel event
+
+on rightclick on hopper:
+	if player's world is "loby":
+		cancel event

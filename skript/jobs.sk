@@ -1,0 +1,697 @@
+command /leavejob1 [<player>]:
+	executable by: console
+	trigger:
+		send arg 1 title "&eMetier" with subtitle "&bTu viens d'abandonner le métier %{job1.%arg 1%}%" for 3 seconds
+		set {lvl_job1.%arg 1%} to 1
+		set {xp_job1.%arg 1%} to 0
+		set {xpjob1.%arg 1%} to 0			
+		set {xpmaxlvljob1.%arg 1%} to 0		
+		set {job1.%arg 1%} to false		
+		remove 1 from {nb_job.%arg 1%}
+
+command /leavejob2 [<player>]:
+	executable by: console
+	trigger:
+		send arg 1 title "&eMetier" with subtitle "&bTu viens d'abandonner le métier %{job2.%arg 1%}%" for 3 seconds
+		set {lvl_job2.%arg 1%} to 1
+		set {xp_job2.%arg 1%} to 0
+		set {xpjob2.%arg 1%} to 0			
+		set {xpmaxlvljob2.%arg 1%} to 0		
+		set {job2.%arg 1%} to false		
+		remove 1 from {nb_job.%arg 1%}
+			
+command /job:
+	trigger:
+		open chest with 2 rows named "&5          Liste des Jobs" to player
+		wait 2 ticks
+		format slot 1 of player with wooden pickaxe named "&3Mineur" with lore "" to close then run [make console execute "/joinmineur %player%"]
+		format slot 3 of player with wooden axe named "&6Bûcheron" with lore "" to close then run [make console execute "/joinbucheron %player%"]
+		format slot 5 of player with wooden sword named "&dChasseur" with lore "" to close then run [make console execute "/joinchasseur %player%"]
+		format slot 7 of player with wooden hoe  named "&aFermier" with lore "&eprochainement .." to close
+		
+		format slot 9 of player with book  named "&bGerer mes métiers" with lore "" to run [make console execute "/gerermetier %player%"]	
+		format slot 17 of player with red wool named "&4Fermer" with lore "" to close
+		
+command /gerermetier [<player>]:
+	executable by: console
+	trigger:
+		open chest with 3 rows named "&5      Informations métiers" to arg 1
+		wait 2 ticks
+		format slot 3 of arg 1 with enchanted book named "%{job1.%arg 1%}%" with lore " ||&eNiveau &c= &b%{lvl_job1.%arg 1%}%||&eXp &c= &e%{xpjob1.%arg 1%}% &c/ &b%{xpmaxlvljob1.%arg 1%}%" to be unstealable
+		format slot 5 of arg 1 with enchanted book named "%{job2.%arg 1%}%" with lore " ||&eNiveau &c= &b%{lvl_job2.%arg 1%}%||&eXp &c= &e%{xpjob2.%arg 1%}% &c/ &b%{xpmaxlvljob2.%arg 1%}%" to be unstealable		
+		format slot 21 of arg 1 with red wool named "&4Abandonner %{job1.%arg 1%}%" with lore "&cCette action est déffinitive||&eVous perdrez vos lvl" to run [make console execute "/confirmationmetier1 %arg 1%"]
+		format slot 23 of arg 1 with red wool named "&4Abandonner %{job2.%arg 1%}%" with lore "&cCette action est déffinitive||&eVous perdrez vos lvl" to run [make console execute "/confirmationmetier2 %arg 1%"]
+			
+command /confirmationmetier1 [<player>]:
+	executable by:console
+	trigger:
+		open chest with 1 rows named "&4Quitter le métier %{job1.%arg 1%}% &4?" to arg 1
+		wait 2 ticks
+		format slot 3 of arg 1 with green wool named "&2Confirmer" with lore "" to close then run [make console execute "/leavejob1 %arg 1%"]
+		format slot 5 of arg 1 with red wool named "&bAnnuler" with lore "" to close
+	
+command /confirmationmetier2 [<player>]:
+	executable by:console
+	trigger:
+		open chest with 1 rows named "&4Quitter le métier %{job2.%arg 1%}% &4?" to arg 1
+		wait 2 ticks
+		format slot 3 of arg 1 with green wool named "&2Confirmer" with lore "" to close then run [make console execute "/leavejob2 %arg 1%"]
+		format slot 5 of arg 1 with red wool named "&bAnnuler" with lore "" to close
+
+command /joinmineur [<player>]:
+	executable by:console
+	trigger:
+		if {nb_job.%arg 1%} >= 2:
+			send "&6tu exerce déja &52 &bmétiers" to arg 1
+			stop
+		if {job1.%arg 1%} is "&3Mineur":
+			send "&btu exerce déja le métier mineur" to arg 1
+			stop
+		if {job2.%arg 1%} is "&3Mineur":
+			send "&btu exerce déja le métier mineur" to arg 1
+			stop
+		if {job1.%arg 1%} is not false:
+			if {job2.%arg 1%} is not false:
+				send "&bTu possède déja deux métiers" to arg 1
+				stop
+			else:
+				set {job2.%arg 1%} to "&3Mineur"
+				send "&bTu est à présent %{job2.%arg 1%}%" to arg 1
+				add 1 to {nb_job.%arg 1%}
+				set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+				stop
+		else:
+			set {job1.%arg 1%} to "&3Mineur"
+			send "&bTu est a présent %{job1.%arg 1%}%" to arg 1
+			add 1 to {nb_job.%arg 1%}
+			set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+			stop
+			
+command /joinbucheron [<player>]:
+	executable by:console
+	trigger:
+		if {nb_job.%arg 1%} >= 2:
+			send "&6tu exerce déja &52 &bmétiers" to arg 1
+			stop
+		if {job1.%arg 1%} is "&6Bûcheron":
+			send "&btu exerce déja le métier &6Bucheron" to arg 1
+			stop
+		if {job2.%arg 1%} is "&6Bucheron":
+			send "&btu exerce déja le métier &6Bûcheron" to arg 1
+			stop
+		if {job1.%arg 1%} is not false:
+			if {job2.%arg 1%} is not false:
+				send "&bTu possède déja deux métiers" to arg 1
+				stop
+			else:
+				set {job2.%arg 1%} to "&6Bûcheron"
+				send "&bTu est à présent %{job2.%arg 1%}%" to arg 1
+				add 1 to {nb_job.%arg 1%}
+				set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+				stop
+		else:
+			set {job1.%arg 1%} to "&6Bûcheron"
+			send "&bTu est a présent %{job1.%arg 1%}%" to arg 1
+			add 1 to {nb_job.%arg 1%}
+			set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+			stop
+			
+command /joinchasseur [<player>]:
+	executable by:console
+	trigger:
+		if {nb_job.%arg 1%} >= 2:
+			send "&6tu exerce déja &52 &bmétiers" to arg 1
+			stop
+		if {job1.%arg 1%} is "&dChasseur":
+			send "&btu exerce déja le métier &dChasseur" to arg 1
+			stop
+		if {job2.%arg 1%} is "&dChasseur":
+			send "&btu exerce déja le métier &dChasseur" to arg 1
+			stop
+		if {job1.%arg 1%} is not false:
+			if {job2.%arg 1%} is not false:
+				send "&bTu possède déja deux métiers" to arg 1
+				stop
+			else:
+				set {job2.%arg 1%} to "&dChasseur"
+				send "&bTu est à présent %{job2.%arg 1%}%" to arg 1
+				add 1 to {nb_job.%arg 1%}
+				set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+				stop
+		else:
+			set {job1.%arg 1%} to "&dChasseur"
+			send "&bTu est a présent %{job1.%arg 1%}%" to arg 1
+			add 1 to {nb_job.%arg 1%}
+			set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+			stop
+			
+command /joinfermier [<player>]:
+	executable by:console
+	trigger:
+		if {nb_job.%arg 1%} >= 2:
+			send "&6tu exerce déja &52 &bmétiers" to arg 1
+			stop
+		if {job1.%arg 1%} is "&aFermier":
+			send "&btu exerce déja le métier &aFarmeur" to arg 1
+			stop
+		if {job2.%arg 1%} is "&aFermier":
+			send "&btu exerce déja le métier &aFermier" to arg 1
+			stop
+		if {job1.%arg 1%} is not false:
+			if {job2.%arg 1%} is not false:
+				send "&bTu possède déja deux métiers" to arg 1
+				stop
+			else:
+				set {job2.%arg 1%} to "&aFermier"
+				send "&bTu est à présent %{job2.%arg 1%}%" to arg 1
+				add 1 to {nb_job.%arg 1%}
+				set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+				stop
+		else:
+			set {job1.%arg 1%} to "&aFermier"
+			send "&bTu est a présent %{job1.%arg 1%}%" to arg 1
+			add 1 to {nb_job.%arg 1%}
+			set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+			stop
+
+on break:
+	if player is in world "world" or "world_nether":
+		if event-blocks is coal ore:
+			if {job1.%player%} is "&3Mineur":
+				set {xp_job1.%player%} to 1
+				set {_xpjob.%player%} to 1 * {lvl_job1.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds					
+			if {job2.%player%} is "&3Mineur":
+				set {xp_job2.%player%} to 1
+				set {_xpjob.%player%} to 1 * {lvl_job2.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds
+		if event-blocks is iron ore:
+			if {job1.%player%} is "&3Mineur":
+				set {xp_job1.%player%} to 2
+				set {_xpjob.%player%} to 2 * {lvl_job1.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds
+			if {job2.%player%} is "&3Mineur":
+				set {xp_job2.%player%} to 2
+				set {_xpjob.%player%} to 2 * {lvl_job2.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds
+		if event-blocks is gold ore:
+			if {job1.%player%} is "&3Mineur":
+				set {xp_job1.%player%} to 3
+				set {_xpjob.%player%} to 3 * {lvl_job1.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds					
+			if {job2.%player%} is "&3Mineur":
+				set {xp_job2.%player%} to 3
+				set {_xpjob.%player%} to 3 * {lvl_job2.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds			
+		if event-blocks is lapis ore:
+			if {job1.%player%} is "&3Mineur":
+				set {xp_job1.%player%} to 2
+				set {_xpjob.%player%} to 2 * {lvl_job1.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds
+			if {job2.%player%} is "&3Mineur":
+				set {xp_job2.%player%} to 2
+				set {_xpjob.%player%} to 2 * {lvl_job2.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds
+		if event-blocks is diamond ore:
+			if {job1.%player%} is "&3Mineur":
+				set {xp_job1.%player%} to 4
+				set {_xpjob.%player%} to 4 * {lvl_job1.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds
+			if {job2.%player%} is "&3Mineur":
+				set {xp_job2.%player%} to 4
+				set {_xpjob.%player%} to 4 * {lvl_job2.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds
+		if event-blocks is emerald ore:
+			if {job1.%player%} is "&3Mineur":
+				set {xp_job1.%player%} to 5
+				set {_xpjob.%player%} to 5 * {lvl_job1.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds
+			if {job2.%player%} is "&3Mineur":
+				set {xp_job2.%player%} to 5
+				set {_xpjob.%player%} to 5 * {lvl_job2.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds
+		if event-blocks is redstone ore:
+			if {job1.%player%} is "&3Mineur":
+				set {xp_job1.%player%} to 2
+				set {_xpjob.%player%} to 2 * {lvl_job1.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds
+			if {job2.%player%} is "&3Mineur":
+				set {xp_job2.%player%} to 2
+				set {_xpjob.%player%} to 2 * {lvl_job2.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds
+		if event-blocks is quartz ore:
+			if {job1.%player%} is "&3Mineur":
+				set {xp_job1.%player%} to 0.5
+				set {_xpjob.%player%} to 0.5 * {lvl_job1.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds
+			if {job2.%player%} is "&3Mineur":
+				set {xp_job2.%player%} to 0.5
+				set {_xpjob.%player%} to 0.5 * {lvl_job2.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds
+					
+on break:
+	if player is in world "world":
+		if event-blocks is log:
+			if {job1.%player%} is "&6Bûcheron":
+				set {xp_job1.%player%} to 2
+				set {_xpjob.%player%} to 2 * {lvl_job1.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds
+			if {job2.%player%} is "&6Bûcheron":
+				set {xp_job2.%player%} to 2
+				set {_xpjob.%player%} to 2 * {lvl_job2.%player%}
+				set {_gainpo} to {_xpjob.%player%} / 5
+				add {_gainpo} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_gainpo}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds
+					
+on death:
+	if attacker is in world "world":
+		if victim is pig:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+					stop
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds		
+					stop
+						
+		
+	# vaches
+		if victim is cow:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds							
+
+					
+	# chiken				
+		if victim is chicken:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds									
+		
+		
+		
+	# chat
+		if victim is ocelot:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds						
+
+	# cheval
+		if victim is horse:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds						
+
+
+	# bouricot
+		if victim is donkey:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds						
+					
+		
+	# ours polaire
+		if victim is polar bear:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds						
+
+
+					
+	# lapins
+		if victim is rabbit:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds						
+					
+	# mouton
+		if victim is sheep:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds						
+
+	
+	# loup
+		if victim is wolf:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds
+							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds						
+	
+	
+	# wither skelette
+		if victim is wither skeleton:
+			if {job1.%attacker%} is "&dChasseur":
+				set {xp_job1.%attacker%} to 2
+				set {_xpjob.%attacker%} to 2 * {lvl_job1.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob1.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob1.%attacker%}% / %{xpmaxlvljob1.%attacker%}%] [%{job1.%attacker%}% : lvl %{lvl_job1.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob1.%attacker%} >= {xpmaxlvljob1.%attacker%}:
+					add 1 to {lvl_job1.%attacker%}
+					set {xpmaxlvljob1.%attacker%} to {xpjob1.%attacker%} * {lvl_job1.%attacker%}
+					send attacker title "Niveau %{job1.%attacker%}% Up!" with subtitle "&bMetier %{job1.%attacker%}% &6lvl &d%{lvl_job1.%attacker%}%" for 3 seconds							
+			if {job2.%attacker%} is "&dChasseur":
+				set {xp_job2.%attacker%} to 1
+				set {_xpjob.%attacker%} to 1 * {lvl_job2.%attacker%}
+				add {_xpjob.%attacker%} to {po.%uuid of attacker%}
+				add {_xpjob.%attacker%} to {xpjob2.%attacker%}
+				send action bar from "&7+%{_xpjob.%attacker%}% &bxp [%{xpjob2.%attacker%}% / %{xpmaxlvljob2.%attacker%}%] [%{job2.%attacker%}% : lvl %{lvl_job2.%attacker%}%]    &7+%{_xpjob.%attacker%}% &ePièces d'or  &7[&e%{po.%uuid of attacker%}% PO&7]" to attacker
+				if {xpjob2.%attacker%} >= {xpmaxlvljob2.%attacker%}:
+					add 1 to {lvl_job2.%attacker%}
+					set {xpmaxlvljob2.%attacker%} to {xpjob2.%attacker%} * {lvl_job2.%attacker%}
+					send attacker title "Niveau %{job2.%attacker%}% Up!" with subtitle "&bMetier %{job2.%attacker%}% &6lvl &d%{lvl_job2.%attacker%}%" for 3 seconds						
+	
+options:
+	cooldownverue: 12 minutes
+
+On place of Nether Wart:
+	set {cooldowns::verue::%event-blocks%} to now 
+
+on break:
+	if player is in world "world":
+		if event-blocks is nether wart:
+			if difference between {cooldowns::%verue%::%event-blocks%} and now < {@cooldownverue}:
+				send action bar from "&7Il est trop tôt pour récolter cette plantation" to player
+				stop
+			if {job1.%player%} is "&aFermier":
+				set {xp_job1.%player%} to 1
+				set {_xpjob.%player%} to 1 * {lvl_job1.%player%}
+				add {_xpjob.%player%} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob1.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob1.%player%}% / %{xpmaxlvljob1.%player%}%] [%{job1.%player%}% : lvl %{lvl_job1.%player%}%]    &7+%{_xpjob.%player%}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob1.%player%} >= {xpmaxlvljob1.%player%}:
+					add 1 to {lvl_job1.%player%}
+					set {xpmaxlvljob1.%player%} to {xpjob1.%player%} * {lvl_job1.%player%}
+					send player title "Niveau %{job1.%player%}% Up!" with subtitle "&bMetier %{job1.%player%}% &6lvl &d%{lvl_job1.%player%}%" for 3 seconds
+			if {job2.%player%} is "&aFermier":
+				set {xp_job2.%player%} to 1
+				set {_xpjob.%player%} to 1 * {lvl_job2.%player%}
+				add {_xpjob.%player%} to {po.%uuid of player%}
+				add {_xpjob.%player%} to {xpjob2.%player%}
+				send action bar from "&7+%{_xpjob.%player%}% &bxp [%{xpjob2.%player%}% / %{xpmaxlvljob2.%player%}%] [%{job2.%player%}% : lvl %{lvl_job2.%player%}%]    &7+%{_xpjob.%player%}% &ePièces d'or  &7[&e%{po.%uuid of player%}% PO&7]" to player
+				if {xpjob2.%player%} >= {xpmaxlvljob2.%player%}:
+					add 1 to {lvl_job2.%player%}
+					set {xpmaxlvljob2.%player%} to {xpjob2.%player%} * {lvl_job2.%player%}
+					send player title "Niveau %{job2.%player%}% Up!" with subtitle "&bMetier %{job2.%player%}% &6lvl &d%{lvl_job2.%player%}%" for 3 seconds

@@ -1,0 +1,36 @@
+command /menu:
+	trigger:
+		if {guilde_name.%player%} is set:
+			open chest with 5 rows named "          &bMenu principal" to player
+			wait 2 ticks
+			format slot 8 of player with red wool named "&bListe des homes et claims" with lore "&6" to be unstealable
+			format slot 2 of player with ghast tear named "&bListe d'amis" with lore "&6" to run [make player execute "/ami list"]
+			format slot 0 of player with enchanted book named "&bListe des commandes" with lore "&6" to run [make player execute "/commandeslist"]
+			format slot 6 of player with clock named "&bInfo Guilde" with lore "&bGuilde : &e%{guilde_name.%player%}%" to be unstealable
+			format slot 22 of player with skull of player named "&bProfil" with lore "&6Temps de connection||&6%{time_log.%player%}% ||&e%{point_flagg_controle_pvp.%player%}% &bpts de capture" to be unstealable
+			format slot 20 of player with diamond pickaxe named "&bMétiers" with lore "&6" to run [make player execute "/job"]
+			format slot 1 of player with paper named "&bRèglement" with lore "&6" to be unstealable
+			format slot 44 of player with apple named "&bAide" with lore "&6" to be unstealable
+			format slot 36 of player with red wool named "&bEvenements" with lore "&6" to be unstealable
+			format slot 43 of player with red wool named "&bStaff" with lore "&6" to be unstealable
+			format slot 37 of player with red wool named "&bClassements" with lore "&6" to be unstealable
+			format slot 4 of player with painting named "&bHDV" with lore "&6" to run [make player execute "/hdv"]
+			format slot 24 of player with chest named "&bSac à dos" with lore "&6" to run [make player execute "/sac"]
+			format slot 7 of player with ender chest named "&bBanque" with lore "&6Accès PRENIUM" to be unstealable
+		else:
+			open chest with 5 rows named "          &bMenu principal" to player
+			wait 2 ticks
+			format slot 8 of player with red wool named "&bListe des homes et claims" with lore "&6" to be unstealable
+			format slot 2 of player with ghast tear named "&bListe d'amis" with lore "&6" to run [make player execute "/ami list"]
+			format slot 0 of player with enchanted book named "&bListe des commandes" with lore "&6" to run [make player execute "/commandeslist"]
+			format slot 6 of player with clock named "&bInfo Guilde" with lore "&6Vous n'êtes membre||&6d'aucune guilde" to be unstealable
+			format slot 22 of player with skull of player named "&bProfil" with lore "&6Temps de connection||&6%{time_log.%player%}% ||&e%{point_flagg_controle_pvp.%player%}% &bpts de capture" to be unstealable
+			format slot 20 of player with diamond pickaxe named "&bMétiers" with lore "&6" to run [make player execute "/job"]
+			format slot 1 of player with paper named "&bRèglement" with lore "&6" to be unstealable
+			format slot 44 of player with apple named "&bAide" with lore "&6" to be unstealable
+			format slot 36 of player with red wool named "&bEvenements" with lore "&6" to be unstealable
+			format slot 43 of player with red wool named "&bStaff" with lore "&6" to be unstealable
+			format slot 37 of player with red wool named "&bClassements" with lore "&6" to be unstealable
+			format slot 4 of player with painting named "&bHDV" with lore "&6" to run [make player execute "/hdv"]
+			format slot 24 of player with chest named "&bSac à dos" with lore "&6" to run [make player execute "/sac"]
+			format slot 7 of player with ender chest named "&bBanque" with lore "&6Accès PRENIUM" to be unstealable

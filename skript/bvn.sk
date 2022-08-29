@@ -1,0 +1,22 @@
+options:
+	cooldownbvn: 5 minutes
+
+command /bvn:
+	trigger:
+		if difference between {lastfirstjointime} and now > {@cooldownbvn}:
+			send "&bAucun nouveau joueur n'a rejoin le jeu ces &e5 &bdernières minutes" to player
+			stop
+		if {bvn.%player%.%{lastfirstjoin}%} is true:
+			send "&6Tu à déja souhaité bienvenue à se joueur" to player
+			stop
+		else:
+			broadcast "%{grade.%uuid of player%}% &7%player% : &aBienvenue &2%{lastfirstjoin}% &b!"
+			set {bvn.%player%.%{lastfirstjoin}%} to true
+			stop
+
+on first join:
+	set {lastfirstjoin} to player
+	set {lastfirstjointime} to now
+	
+	
+	

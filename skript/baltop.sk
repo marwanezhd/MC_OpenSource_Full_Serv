@@ -1,0 +1,22 @@
+command /baltop:
+	trigger:
+		set {_copieliste::*} to {baltoplist::*}
+		loop 10 times: 
+			clear {_maxv}
+			loop {_copieliste::*}:
+				if {_maxv} is not set:
+					set {_maxv} to loop-value-2
+					set {_maxi} to loop-index-2
+				else if {_maxv} is higher than loop-value-2:
+					set {_maxv} to loop-value-2
+					set {_maxi} to loop-index-2
+			clear {_copieliste::%{_maxi}%}
+			set {_topv::%loop-number%} to {_maxv}
+			set {_topi::%loop-number%} to {_maxi}
+		send "&6Baltop &9: %{_copieliste::*}%" to player
+	
+on quit:
+	remove {profil_po.%player%} from {baltoplist::*}
+	wait 5 ticks
+	set {profil_po.%player%} to "&2%player% : &e%{po.%uuid of player%}% &bPièces d'or &c, "
+	add {profil_po.%player%} to {baltoplist::*}

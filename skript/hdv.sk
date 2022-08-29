@@ -1,0 +1,112 @@
+command /po:
+	trigger:
+		send "&bVous avez &e%{po.%uuid of player%}% &bPièces d'or" to player
+
+options:
+	hdv: &d&l[HDV]&r
+	
+function buy(p: player, p2: text, t: text):
+	set {_uuid} to uuid of {_p}
+	if {po.%{_uuid}%} >= {hdv.prix::%{_t}%}:
+		give {hdv.item::%{_t}%} to {_p}
+		remove {hdv.prix::%{_t}%} from {po.%{_uuid}%}
+		set {_uuid2} to uuid of {hdv.name::%{_t}%}
+		add {hdv.prix::%{_t}%} to {po.%{_uuid2}%}
+		message "{@hdv} vous avez acheter %{hdv.item::%{_t}%}% pour &6%{hdv.prix::%{_t}%}% &e&lPièces d'or" to {_p}
+		message "{@hdv} votre item a été vendu pour &6%{hdv.prix::%{_t}%}% &e&lPièces d'or" to {hdv.name::%{_t}%}
+		delete {hdv.name::%{_t}%}
+		delete {hdv.item::%{_t}%}
+		delete {hdv.prix::%{_t}%}
+	else:
+		message "{@hdv} vous n'avez pas assez de pieces d'or pour acheter cet item !" to {_p}
+function venteperso(p: player):
+	set {_slot} to 0
+	set {_id} to 1
+	open virtual chest inventory with size 6 named "&9» &d&lVOS VENTES" to {_p}
+	make a gui slot 36 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 38 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 40 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 42 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 44 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 37 of {_p} with stained glass pane:9 named " " to do nothing
+	make a gui slot 39 of {_p} with stained glass pane:9 named " " to do nothing
+	make a gui slot 41 of {_p} with stained glass pane:9 named " " to do nothing
+	make a gui slot 43 of {_p} with stained glass pane:9 named " " to do nothing
+	make a gui slot 49 of {_p} with sunflower named "&eRefresh" to run function venteperso({_p})
+	make a gui slot 48 of {_p} with paper named "&7Retour HDV" to run function guihdv({_p}, 0)
+	loop {hdv.name::*}:
+		if loop-value is "%{_p}%":
+			make a gui slot {_slot} of {_p} with {hdv.item::%loop-index%} with lore "&7ID: &6%{_id}%||&7Prix: &6%{hdv.prix::%loop-index%}% &e&lPièces d'or||&7Vendeur: &6%{hdv.name::%loop-index%}%||||&aClick pour retiré l'item" to close then run function remove({_p}, "%loop-index%")
+			add 1 to {_slot}
+			add 1 to {_id}
+
+function remove(p: player, t: text):
+	if {hdv.name::%{_t}%} is "%{_p}%":
+		give {hdv.item::%{_t}%} to {_p}
+		message "{@hdv} votre item a été retiré de la vente !" to {_p}
+		delete {hdv.name::%{_t}%}
+		delete {hdv.item::%{_t}%}
+		delete {hdv.prix::%{_t}%}
+	else:
+		message "{@hdv} &cvous n'êtes pas propriétaire de cet item" to {_p}
+function guihdv(p: player, page: number):
+	set {_startpage} to {_page}*36
+	set {_i} to 1
+	set {_slot} to 0
+	set {_id} to 1
+	open virtual chest inventory with size 6 named "&9» &d&lHDV &a&l##%{_page}%" to {_p}
+	make a gui slot 36 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 38 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 40 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 42 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 44 of {_p} with stained glass pane:0 named " " to do nothing
+	make a gui slot 37 of {_p} with stained glass pane:9 named " " to do nothing
+	make a gui slot 39 of {_p} with stained glass pane:9 named " " to do nothing
+	make a gui slot 41 of {_p} with stained glass pane:9 named " " to do nothing
+	make a gui slot 43 of {_p} with stained glass pane:9 named " " to do nothing
+	if {_page} = 0:
+		make a gui slot 48 of {_p} with paper named "&7<--" to do nothing
+	else:
+		make a gui slot 48 of {_p} with paper named "&7<--" to run function guihdv({_p}, ({_page} - 1))
+	make a gui slot 49 of {_p} with sunflower named "&eRefresh" to run function guihdv({_p}, {_page})
+	make a gui slot 50 of {_p} with paper named "&7-->" to run function guihdv({_p}, ({_page} + 1))
+	make a gui slot 45 of {_p} with book named "&eVos ventes" to run function venteperso({_p})
+	wait 1 ticks
+	loop {hdv.item::*}:
+		if loop-index parsed as a number > {_startpage}:
+			if {hdv.name::%loop-index%} is "%{_p}%":
+				make a gui slot {_slot} of {_p} with {hdv.item::%loop-index%} with lore "&7ID: &6%{_id}%||&7Prix: &6%{hdv.prix::%loop-index%}% &e&lPièces d'or||&7Vendeur: &6%{hdv.name::%loop-index%}%||||&aClick pour retiré l'item" to close then run function remove({_p}, "%loop-index%")
+				add 1 to {_slot}
+				add 1 to {_id}
+			else:
+				make a gui slot {_slot} of {_p} with {hdv.item::%loop-index%} with lore "&7ID: &6%{_id}%||&7Prix: &6%{hdv.prix::%loop-index%}% &e&lPièces d'or||&7Vendeur: &6%{hdv.name::%loop-index%}%" to close then run function buy({_p}, "%{hdv.name::%loop-index%}%", "%loop-index%")
+				add 1 to {_slot}
+				add 1 to {_id}
+			if {_slot} = (36*{_i}):
+				exit loop
+				
+command /vente [<text>] [<text>]:
+	trigger:
+		if arg 1 is set:
+			if arg 1 is "create":
+				if arg 2 is set:
+					if arg 2 parsed as a number is a number:
+						if tool of player is not air:
+							add tool of player to {hdv.item::*}
+							add arg 2 parsed as a number to {hdv.prix::*}
+							add player to {hdv.name::*}
+							wait 1 ticks
+							remove tool of player from player's inventory
+							message "{@hdv} item mit en vente !"
+						else:
+							message "{@hdv} &cvous devez avoir un item dans la main !"
+					else:
+						message "{@hdv} &7- &6/vente &7<&acreate&7> &7<&aprix&7>"
+				else:
+					message "{@hdv} &7- &6/vente &7<&acreate&7> &7<&aprix&7>"
+		else:
+			message "{@hdv} &7- &6/vente &7<&acreate&7> &7<&aprix&7>"
+			
+command /hdv:
+	trigger:
+		guihdv(player, 0)

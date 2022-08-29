@@ -1,0 +1,15 @@
+every 29 minutes:
+	broadcast "&c[Attention] &6Suppression de tous les objets au sol dans 60 secondes"
+	wait 60 seconds
+	clear all dropped items in "world"
+	wait 5 seconds
+	clear all dropped items in "world"
+	wait 5 seconds
+	clear all dropped items in "arene"
+	wait 5 seconds
+	clear all dropped items in "world_the_end"
+	wait 5 seconds
+	clear all dropped items in "world_nether"
+	wait 5 seconds
+	broadcast "&c[Attention] &6Prochaine suppression d'items dans 30 minutes"
+

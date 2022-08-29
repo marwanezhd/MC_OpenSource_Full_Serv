@@ -1,0 +1,174 @@
+on join:	
+	teleport player to {warp.loby}
+	set {afreeze.%player%} to true
+	apply blindness to the player for 9999 seconds
+	if {register.%player%} is set:
+		if {ip.register.%player%.%ip of player%} is set:
+			if {ip.%player%} is not {ip.register.%player%.%ip of player%}:
+				loop all players:
+					if loop-player is op:
+						send "&e&lLe joueur &b&l%player% &e&ln'as pas la meme ip que lors de l'enregistrement." to loop-player
+	set {lastip.%player%} to ip of player
+	if ip of player is not {ip.%player%}:
+		loop all players:
+			if loop-player is op:
+				send "&e&lLe joueur &b&l%player% &e&ln'as pas la meme ip que lors de l'enregistrement." to loop-player
+	if player is not in {%ip of player%::*}:
+		add player to {%ip of player%::*}
+	if {%ip of player%::*} >= 2:
+		set {compte::*} to {%ip of player%::*}
+		loop all players:
+			if loop-player is op:
+				send "&e&lLes joueurs &f&l: &b&l%{compte::*}% &e&lont la meme ip" to loop-player
+				delete {compte::*}
+
+command /showip [<player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			if player is op:
+				if arg 1 is set:
+					if arg 1 is online:
+						send "&6&lL'ip de &b&l%arg 1% &6&lest &f&l: %{ip.%arg 1%}%"
+					else:
+						send "&c&lCe joueur n'est pas en ligne &f&l!"
+				else:
+					send "&c&lMerci de rentrer un joueur &f&l!"
+			else:
+				send "&c&lTu n'as pas la permission d'utiliser cette commande &f&l!"
+
+command /register [<text>] [<text>]:
+	trigger:
+		if arg 1 is set:
+			if arg 2 is set:
+				if {register.%player%} is not set:
+					set {password.%player%} to arg 1
+					set {password.confirm.%player%} to arg 2
+					wait 3 ticks
+					if {password.confirm.%player%} = {password.%player%}:
+						set {register.%player%} to true
+						set {login.%player%} to true
+						send "&f&l[&b&lRegister&f&l] &6&lEnregistrement &f&l: &a&lRéussie"
+						set {afreeze.%player%} to false
+						execute console command "/effect %player% clear"
+						teleport player to {warp.spawn}
+						#set {ip.register.%player%.%ip of player%} to ip of player
+						#set {ip.%player%} to ip of player
+						#add ip of player to {ip.%ip of player%::*}
+					else:
+						send "&f&l[&b&lRegister&f&l] &6&lEnregistrement &f&l: &4&lÉchoué%nl%&6&lRaison&f&l(s&f&l) : &e&l%arg 1% &6&l %arg 2% &6&lne se correspondent pas &f&l!"
+				else:
+					send "&4&lTu est déjà enregistrer"
+			else:
+				send "&4&lMerci de confirmer votre mot de passe &f&l!"
+		else:
+			send "&4&lMerci de rentrer un mot de passe"
+
+command /login [<text>]:
+	trigger:
+		if arg 1 is set:
+			if {register.%player%} = true:
+				if {login.%player%} = false:
+					if arg 1 = {password.%player%}:
+						send "&f&l[&b&lLogin&f&l] &6&lConnexion &f&l: &a&lRéussie"
+						set {login.%player%} to true
+						set {afreeze.%player%} to false
+						set {changepass.allow.%player%} to true
+						execute console command "/effect %player% clear" 
+					else:
+						send "&f&l[&b&lLogin&f&l] &6&lConnexion &f&l: &4&lÉchec%nl%&6&lRaison&f&l(s&f&l) : &e&lMauvais mot de passe"
+				else:
+					send "&6&lTu est déjà connecter &f&l!"
+			else:
+				send "&4&lTu n'est pas enregistrer"
+		else:
+			send "&4&lMerci de rentrer un mot de passe"
+
+command /changemdp [<text>] [<text>]:
+	trigger:
+		if arg 1 is not set:
+			if arg 1 is not set:
+				if player is in world "world" or "loby":
+					if {changepass.allow.%player%} is not set:
+						send "&6&lTape &f&l: &b&l/changemdp <ton mdp> <new mdp>"
+						set {changepass.allow.%player%} to true
+						execute console command "/afreeze %player%"
+		if arg 1 is set:
+			if arg 2 is set:
+				if {register.%player%} = true:
+					if {login.%player%} = true:
+						if arg 1 = {password.%player%}:
+							if {changepass.allow.%player%} = true:
+								set {password.%player%} to arg 2
+								send "&6&lMot de passe changé en &f&l: &b&l%arg 2%"
+								delete {changepass.allow.%player%}
+								execute console command "/afreeze %player%"
+								wait 1 second
+							else:
+								send "&4&l/changemdp [<ANCIEN MDP>] [<NOUVEAU MDP>]"
+						else:
+							send "&4&lUtilise &f&l: &e&l/changemdp %{password.%player%}% %arg 2%"
+					else:
+						send "&6&lMerci de te connecter"
+				else:
+					send "&6&lTu n'est pas enregistrer"
+			else:
+				send "&6&lMerci de rentrer un nouveau mot de passe"
+		else:
+			send "&4&l/changemdp [<ANCIEN MDP>] [<NOUVEAU MDP>]"
+
+on any move:
+	if {afreeze.%player%} = true:
+		cancel event
+		set player's walk speed to 0
+		teleport player to {checkpoint.%player%}
+	else:
+		set player's walk speed to 0.2
+
+every 10 seconds:
+	loop all players:
+		if {register.%loop-players%} is not set:
+			apply blindness 10 to the loop-players
+			send "&6&lTape &f&l/register <mdp> <confirme ton mdp>" to loop-player
+		if {register.%loop-players%} = true:
+			if {login.%loop-players%} = false:
+				apply blindness 10 to the loop-players
+				send "&6&lTape &f&l/login <ton mdp>" to loop-player
+
+On join:
+	set {login.%player%} to false 
+	set {changepass.allow.%player%} to false
+
+On quit:
+	set {login.%player%} to false
+	set {changepass.allow.%player%} to false
+
+on chat:
+	if {register.%player%} is not set:
+		cancel event
+	if {login.%player%} = false:
+		cancel event
+
+command /admauthme [<text>] [<player>] [<text>]:
+	trigger:
+		if player is op:
+			if arg 1 is set:
+				if arg 2 is set:
+					if arg 3 is set:
+						if arg 1 is "changepass":
+							set {password.%arg 2%} to arg 3
+							if arg 2 is online:
+								send "&6&lTon mot de passe a été changé par &b&l%player%" to arg 2
+								send "&6&lTu as changé le mot de passe de &b&l%arg 2% &6&len %arg 3%"
+			else:
+				send "&6&lUtilise &f&l: &b&l/admauthme changepass <joueur> <nouveau mdp>"
+				
+on chat:
+	if {afreeze.%player%} is true:
+		cancel event
+		
+on command:
+	if {afreeze.%player%} is true:
+		if command contains "login" or "register" or "changepass" or "showip":
+			stop
+		else:
+			cancel event

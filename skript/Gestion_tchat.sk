@@ -1,0 +1,41 @@
+every 20 minutes:
+	add 1 to {compteur.automsg}
+	if {compteur.automsg} = 1:
+		broadcast "&bPour acceder au menu principal faites /menu"
+		set {compteur.automsg} to 0
+		
+on first join:
+	set {bvn.p} to player
+	broadcast "[%player%] vient de nous rejoindre !"
+	wait 35 seconds
+	clear {.bvn.p}
+	stop
+
+on join:
+	if {moment_sanction.%player%} is set:
+		set join message to ""
+		stop
+	set join message to ""
+	broadcast "&a[✔] %player%"
+	send action bar from "&bPart vite a l'aventure" to player
+	
+on quit:
+	if {moment_sanction.%player%} is set:
+		set quit message to ""
+		stop
+	set quit message to ""
+	broadcast "&c[✘] &7%player%"
+	
+on kick:
+	if {moment_sanction.%player%} is set:
+		set quit message to ""
+		stop
+	set kick message to ""
+	broadcast "&c[✘] &7%player%"
+	
+command /cleartchat:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]" or "&9[Chef-Modérateur]":
+			loop 250 times:
+				broadcast ""
+			message "&cUn Administrateur a vidé le tchat"

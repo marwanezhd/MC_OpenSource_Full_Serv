@@ -1,0 +1,11 @@
+command /msg <player> <text>:
+	usage: /msg <player> <message>
+	aliases: /w
+	trigger:
+		if arg 1 is not a player:
+			send "&e/&bmsg &e<joueur> <message>" to player
+			stop
+		set {chat.private.msg.%player%} to arg 1
+		set {chat.private.msg.%arg 1%} to player
+		send "&7[Message Envoyé] &bà &5%arg 1% &f: &7%arg 2%" to player
+		send "&e[Message Recu] &bde &5%player% &f: &e%arg 2%" to arg 1

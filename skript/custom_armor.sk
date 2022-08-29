@@ -1,0 +1,289 @@
+# liste des effets possiblement utilisables pour renforcer les set legendaires par la suite:
+# apply regeneration tier 1 to player for 99 days ambient true
+
+# Liste des effets bonus utilisé par les set legendaires
+
+# apply resistance tier 1 to player for 99 days ambient true
+# apply strength tier 1 to player for 99 days ambient true
+# apply speed tier 1 to player for 99 days ambient true
+# apply fire resistance tier 1 to player for 99 days ambient true
+
+# reactivation des bonus a la connection ( a ratacher au systeme de login une fois finalisé )			
+on join:
+	wait 20 seconds
+	if {buff_speed.%player%} is true:
+		apply speed tier 1 to player for 99 days ambient true
+		stop
+	if {buff_resi.%player%} is true:
+		apply resistance tier 1 to player for 99 days ambient true
+		stop
+	if {buff_fire_resi.%player%} is true:
+		apply fire resistance tier 1 to player for 99 days ambient true
+		stop
+	if {buff_force.%player%} is true:
+		apply strength tier 1 to player for 99 days ambient true
+		stop
+					
+command /dbuggstat:
+	trigger:
+		set {buff_speed.%player%} to false
+		set {buff_resi.%player%} to false
+		set {buff_fire_resi.%player%} to false
+		set {buff_force.%player%} to false
+					
+# Gestion de l'allocation des buffs lors de l'équipement de la 4/4 partie de l'armure					
+
+on armor equip:
+	wait 2 ticks
+# Stuff Apocalypse
+	if name of player's helmet contains "&cCasque Apocalypse":
+		if name of player's chestplate contains "&cArmure Apocalypse":
+			if name of player's leggings contains "&cPantalon Apocalypse":
+				if name of player's boots contains "&cBottes Apocalypse":
+					apply resistance tier 1 to player for 99 days ambient true
+					set {buff_resi.%player%} to true
+					set action bar of player to "&cSet Apocalypse &7(&e4&7/&e4&7)"
+					stop
+# stuff Hermes
+	if name of player's helmet contains "&eCasque Hermes":
+		if name of player's chestplate contains "&eArmure Hermes":
+			if name of player's leggings contains "&ePantalon Hermes":
+				if name of player's boots contains "&eBottes Hermes":
+					apply speed tier 1 to player for 99 days ambient true
+					set {buff_speed.%player%} to true
+					set action bar of player to "&eSet Hermes &7(&e4&7/&e4&7)"
+					stop
+# stuff Neptune					
+	if name of player's helmet contains "&bCasque Neptune":
+		if name of player's chestplate contains "&bArmure Neptune":
+			if name of player's leggings contains "&bPantalon Neptune":
+				if name of player's boots contains "&bBottes Neptune":
+					apply fire resistance tier 1 to player for 99 days ambient true
+					set {buff_fire_resi.%player%} to true
+					set action bar of player to "&bSet Neptune &7(&e4&7/&e4&7)"
+					stop
+# Stuff Athéna
+	if name of player's helmet contains "&6Casque Athéna":
+		if name of player's chestplate contains "&6Armure Athéna":
+			if name of player's leggings contains "&6Pantalon Athéna":
+				if name of player's boots contains "&6Bottes Athéna":
+					apply strength tier 1 to player for 99 days ambient true
+					set {buff_force.%player%} to true
+					set action bar of player to "&6Set Athéna &7(&e4&7/&e4&7)"
+					stop
+				
+# gestion des suppression de buff en cas de déséquipement d'une ou de toutes les parties de l'armure					
+					
+on armor unequip:
+	wait 2 ticks
+# Stuff Apocalypse
+	if name of player's helmet contains "&cCasque Apocalypse":
+		if {buff_resi.%player%} = true:
+			remove resistance from player
+			set {buff_resi.%player%} to false
+			stop
+	if name of player's chestplate contains "&cArmure Apocalypse":
+		if {buff_resi.%player%} = true:
+			remove resistance from player
+			set {buff_resi.%player%} to false
+			stop
+	if name of player's leggings contains "&cPantalon Apocalypse":
+		if {buff_resi.%player%} = true:
+			remove resistance from player
+			set {buff_resi.%player%} to false
+			stop
+	if name of player's boots contains "&cBottes Apocalypse":
+		if {buff_resi.%player%} = true:
+			remove resistance from player
+			set {buff_resi.%player%} to false
+			stop
+
+# stuff Hermes
+	if name of player's helmet contains "&eCasque Hermes":
+		if {buff_speed.%player%} = true:
+			remove speed from player
+			set {buff_speed.%player%} to false
+			stop
+	if name of player's chestplate contains "&eArmure Hermes":
+		if {buff_speed.%player%} = true:
+			remove speed from player
+			set {buff_speed.%player%} to false
+			stop
+	if name of player's leggings contains "&ePantalon Hermes":
+		if {buff_speed.%player%} = true:
+			remove speed from player
+			set {buff_speed.%player%} to false
+			stop
+	if name of player's boots contains "&eBottes Hermes":
+		if {buff_speed.%player%} = true:
+			remove speed from player
+			set {buff_speed.%player%} to false
+			stop
+					
+# stuff Neptune
+	if name of player's helmet contains "&bCasque Neptune":
+		if {buff_fire_resi.%player%} = true:
+			remove fire resistance from player
+			set {buff_fire_resi.%player%} to false
+			stop
+	if name of player's chestplate contains "&bArmure Neptune":
+		if {buff_fire_resi.%player%} = true:
+			remove fire resistance from player
+			set {buff_fire_resi.%player%} to false
+			stop
+	if name of player's leggings contains "&bPantalon Neptune":
+		if {buff_fire_resi.%player%} = true:
+			remove fire resistance from player
+			set {buff_fire_resi.%player%} to false
+			stop
+	if name of player's boots contains "&bBottes Neptune":
+		if {buff_fire_resi.%player%} = true:
+			remove fire resistance from player
+			set {buff_fire_resi.%player%} to false
+			stop
+			
+# stuff Athéna
+	if name of player's helmet contains "&6Casque Athéna":
+		if {buff_force.%player%} = true:
+			remove strength from player
+			set {buff_force.%player%} to false
+			stop
+	if name of player's chestplate contains "&6Armure Athéna":
+		if {buff_force.%player%} = true:
+			remove strength from player
+			set {buff_force.%player%} to false
+			stop
+	if name of player's leggings contains "&6Pantalon Athéna":
+		if {buff_force.%player%} = true:
+			remove strength from player
+			set {buff_force.%player%} to false
+			stop
+	if name of player's boots contains "&6Bottes Athéna":
+		if {buff_force.%player%} = true:
+			remove strength from player
+			set {buff_force.%player%} to false
+			stop
+
+		
+# give des stuffs ( après vérification que le nombre d'oarbes que possède le joueur est suffisant pour aquérir le set , et débit du prix du set du nombre d'orbes possédé par le joueur
+
+# Stuff apocalypse
+command /set_apocalypse [<player>]:
+	executable by:console
+	trigger:
+		if arg 1 has enough space for 4 diamond helmet:
+			if {orbes.%arg 1%} >= 5000:
+				remove 5000 from {orbes.%arg 1%}
+				set {apocalypse_casque.%arg 1%} to a unbreakable diamond helmet of Protection 4 named "&cCasque Apocalypse" with lore "&6Bonus &7(&e4&7/&e4&7) : &bRésistance||&bEveil &7: &eAucun"
+				set {apocalypse_armure.%arg 1%} to a unbreakable diamond chestplate of Protection 4 named "&cArmure Apocalypse" with lore "&6Bonus &7(&e4&7/&e4&7) : &bRésistance||&bEveil &7: &eAucun"
+				set {apocalypse_pentalon.%arg 1%} to a unbreakable diamond leggings of Protection 4 named "&cPantalon Apocalypse" with lore "&6Bonus &7(&e4&7/&e4&7) : &bRésistance||&bEveil &7: &eAucun"
+				set {apocalypse_bottes.%arg 1%} to a unbreakable diamond boots of Protection 4 named "&cBottes Apocalypse" with lore "&6Bonus &7(&e4&7/&e4&7) : &bRésistance||&bEveil &7: &eAucun"
+				
+				give {apocalypse_casque.%arg 1%} to arg 1
+				give {apocalypse_armure.%arg 1%} to arg 1
+				give {apocalypse_pentalon.%arg 1%} to arg 1
+				give {apocalypse_bottes.%arg 1%} to arg 1
+				stop
+			else:
+				open chest with 1 rows named "      &6Pas assez d'orbes" to arg 1
+				wait 2 ticks
+				format slot 4 of arg 1 with book named "&cFermer" with lore "" to close
+				stop
+		else:
+			open chest with 1 rows named "       &6Pas assez de place" to arg 1
+			wait 2 ticks
+			format slot 4 of arg 1 with book named "&cFermer" with lore "" to close
+			stop
+		
+# Stuff Hermes
+command /set_hermes [<player>]:
+	executable by:console
+	trigger:
+		if arg 1 has enough space for 4 diamond helmet:
+			if {orbes.%arg 1%} >= 5000:
+				remove 5000 from {orbes.%arg 1%}
+				set {hermes_casque.%arg 1%} to a unbreakable diamond helmet of Protection 4 named "&eCasque Hermes" with lore "&6Bonus &7(&e4&7/&e4&7) : &bVitesse||&bEveil &7: &eAucun"
+				set {hermes_armure.%arg 1%} to a unbreakable diamond chestplate of Protection 4 named "&eArmure Hermes" with lore "&6Bonus &7(&e4&7/&e4&7) : &bVitesse||&bEveil &7: &eAucun"
+				set {hermes_pentalon.%arg 1%} to a unbreakable diamond leggings of Protection 4 named "&ePantalon Hermes" with lore "&6Bonus &7(&e4&7/&e4&7) : &bVitesse||&bEveil &7: &eAucun"
+				set {hermes_bottes.%arg 1%} to a unbreakable diamond boots of Protection 4 named "&eBottes Hermes" with lore "&6Bonus &7(&e4&7/&e4&7) : &bVitesse||&bEveil &7: &eAucun"
+				
+				give {hermes_casque.%arg 1%} to arg 1
+				give {hermes_armure.%arg 1%} to arg 1
+				give {hermes_pentalon.%arg 1%} to arg 1
+				give {hermes_bottes.%arg 1%} to arg 1
+				stop
+			else:
+				open chest with 1 rows named "      &6Pas assez d'orbes" to arg 1
+				wait 2 ticks
+				format slot 4 of arg 1 with book named "&cFermer" with lore "" to close
+				stop
+		else:
+			open chest with 1 rows named "       &6Pas assez de place" to arg 1
+			wait 2 ticks
+			format slot 4 of arg 1 with book named "&cFermer" with lore "" to close
+			stop
+		
+		
+# Stuff Neptune
+command /set_neptune [<player>]:
+	executable by:console
+	trigger:
+		if arg 1 has enough space for 4 diamond helmet:
+			if {orbes.%arg 1%} >= 5000:
+				remove 5000 from {orbes.%arg 1%}
+				set {neptune_casque.%arg 1%} to a unbreakable diamond helmet of Protection 4 named "&bCasque Neptune" with lore "&6Bonus &7(&e4&7/&e4&7) : &bRésistance au feu||&bEveil &7: &eAucun"
+				set {neptune_armure.%arg 1%} to a unbreakable diamond chestplate of Protection 4 named "&bArmure Neptune" with lore "&6Bonus &7(&e4&7/&e4&7) : &bRésistance au feu||&bEveil &7: &eAucun"
+				set {neptune_pentalon.%arg 1%} to a unbreakable diamond leggings of Protection 4 named "&bPantalon Neptune" with lore "&6Bonus &7(&e4&7/&e4&7) : &bRésistance au feu||&bEveil &7: &eAucun"
+				set {neptune_bottes.%arg 1%} to a unbreakable diamond boots of Protection 4 named "&bBottes Neptune" with lore "&6Bonus &7(&e4&7/&e4&7) : &bRésistance au feu||&bEveil &7: &eAucun"
+				
+				give {neptune_casque.%arg 1%} to arg 1
+				give {neptune_armure.%arg 1%} to arg 1
+				give {neptune_pentalon.%arg 1%} to arg 1
+				give {neptune_bottes.%arg 1%} to arg 1
+				stop
+			else:
+				open chest with 1 rows named "      &6Pas assez d'orbes" to arg 1
+				wait 2 ticks
+				format slot 4 of arg 1 with book named "&cFermer" with lore "" to close
+				stop
+		else:
+			open chest with 1 rows named "       &6Pas assez de place" to arg 1
+			wait 2 ticks
+			format slot 4 of arg 1 with book named "&cFermer" with lore "" to close
+			stop
+
+# Stuff Athéna
+command /set_athena [<player>]:
+	executable by:console
+	trigger:
+		if arg 1 has enough space for 4 diamond helmet:
+			if {orbes.%arg 1%} >= 5000:
+				remove 5000 from {orbes.%arg 1%}
+				set {athena_casque.%arg 1%} to a unbreakable diamond helmet of Protection 4 named "&6Casque Athéna" with lore "&6Bonus &7(&e4&7/&e4&7) : &bForce||&bEveil &7: &eAucun"
+				set {athena_armure.%arg 1%} to a unbreakable diamond chestplate of Protection 4 named "&6Armure Athéna" with lore "&6Bonus &7(&e4&7/&e4&7) : &bForce||&bEveil &7: &eAucun"
+				set {athena_pentalon.%arg 1%} to a unbreakable diamond leggings of Protection 4 named "&6Pantalon Athéna" with lore "&6Bonus &7(&e4&7/&e4&7) : &bForce||&bEveil &7: &eAucun"
+				set {athena_bottes.%arg 1%} to a unbreakable diamond boots of Protection 4 named "&6Bottes Athéna" with lore "&6Bonus &7(&e4&7/&e4&7) : &bForce||&bEveil &7: &eAucun"
+				
+				give {athena_casque.%arg 1%} to arg 1
+				give {athena_armure.%arg 1%} to arg 1
+				give {athena_pentalon.%arg 1%} to arg 1
+				give {athena_bottes.%arg 1%} to arg 1
+				stop
+			else:
+				open chest with 1 rows named "      &6Pas assez d'orbes" to arg 1
+				wait 2 ticks
+				format slot 4 of arg 1 with book named "&cFermer" with lore "" to close
+				stop
+		else:
+			open chest with 1 rows named "       &6Pas assez de place" to arg 1
+			wait 2 ticks
+			format slot 4 of arg 1 with book named "&cFermer" with lore "" to close
+			stop
+		
+# give orbes :
+command /giveorbes [<player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]":
+			add 5000 to {orbes.%arg 1%}
+			send "&7+&e5000 &borbes" to arg 1
+			

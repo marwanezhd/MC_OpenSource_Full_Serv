@@ -1,0 +1,44 @@
+options:
+#Minimum amount of blocks farm from X cord to tp to
+	min.x: -10000
+#maximum amount of blocks farm from X cord to tp to
+	max.x: 10000
+#Minimum amount of blocks farm from Z cord to tp to
+	min.z: -10000
+#maximum amount of blocks farm from Z cord to tp to
+	max.z: 1000
+#Amount of time before the player will be allowed to use the command again
+	cooldown: 5 minutes
+#Avoid spawning in lava, water and air
+	avoid: air or water block or lava block or stone
+#To add worlds it would look like 
+#	worlds: "world" or "world_nether" or "world_the_end"
+	worlds: "world"
+#Can not execute command in this world message
+	NoWorldMsg: &4Tu ne peux pas utiliser cette commande dans ce monde !
+#Cooldown message
+	SpamMsg: &eTu dois attendre &b5 minutes &eentre chaque Téléportation aléatoire !
+
+Command /rtp:
+	trigger:
+		if world is not {@worlds}:
+			message "{@NoWorldMsg}"
+		else:
+			if difference between {cooldowns::randomtp::%player%} and now < {@cooldown}:
+				send "{@SpamMsg}"
+			else:
+				set {back.%player%} to location of player
+				set {_loc::old} to player's location
+				while player's location is {_loc::old}:
+					set {_loc::new} to location at random number between {@min.x} and {@max.x}, 0, random number between {@min.z} and {@max.z}
+					loop blocks above {_loc::new}:
+						if loop-block and block above loop-block are air:
+							if block under loop-block is not {@avoid}:
+								set {_loc::new} to location of loop-block
+								set {back.%player%} to location of player
+								teleport player to {_loc::new}
+								if light level at player <= 2:
+									set block at player to ground torch
+								set {cooldowns::randomtp::%player%} to now 
+								stop loop
+					wait 10 ticks

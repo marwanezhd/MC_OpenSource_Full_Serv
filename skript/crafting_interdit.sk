@@ -1,0 +1,3 @@
+On craft a enchanted golden apple:
+	cancel event
+	send "&cTu ne peux pas craft cet item" to player

@@ -1,0 +1,37 @@
+options:               
+	tabHeader: "   &a&lGENESE &8[&2&lSURVIE &8/ &c&lPVP&8] %nl%"
+	tabFooterHub: " %nl%&b/menu &epour acceder au &bmenu principal%nl%%nl%&6================================== %nl%&6Site à venir%nl%=================================="
+       
+on join:
+	set {_player} to "%player%"
+	if length of {_player} > 10:
+		if {guilde_name.%player%} is set:
+			set {pseudo_ig.%player%} to "%first 10 characters of {_player}%"
+			set sender's nametag to "&6[%{guilde_name.%player%}%] &a%{pseudo_ig.%player%}%"
+		else:
+			set {pseudo_ig.%player%} to "%first 10 characters of {_player}%"
+			set sender's nametag to "&a%{pseudo_ig.%player%}%"
+	if length of {_player} <= 10:
+		if {guilde_name.%player%} is set:
+			set {pseudo_ig.%player%} to "%first 10 characters of {_player}%"
+			set sender's nametag to "&6[%{guilde_name.%player%}%] &a%{pseudo_ig.%player%}%"
+		else:
+			set {pseudo_ig.%player%} to "%first 10 characters of {_player}%"
+			set sender's nametag to "&a%{pseudo_ig.%player%}%"
+			
+	loop all players:
+		set tab header to {@tabHeader} and footer to {@tabFooterHub} for loop-player
+		set loop-player tab name to "%{grade.%uuid of loop-player%}% &e%loop-player%"
+		if {amount of players} <= 10:
+			set amount of columns in player's array tablist to 0
+		if {amount of players} > 10:
+			set amount of columns in player's array tablist to 1
+		
+on quit:
+	loop all players:
+		set tab header to {@tabHeader} and footer to {@tabFooterHub} for loop-player
+		set loop-player tab name to "%{grade.%uuid of loop-player%}% &e%loop-player%"
+		if {amount of players} <= 10:
+			set amount of columns in player's array tablist to 0
+		if {amount of players} > 10:
+			set amount of columns in player's array tablist to 1

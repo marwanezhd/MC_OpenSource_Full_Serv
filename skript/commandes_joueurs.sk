@@ -1,0 +1,8 @@
+command /spawn:
+	trigger:
+		if world is "world":
+			set {back.%player%} to location of player
+			teleport player to {warp.loby}
+		if world is "loby":
+			send "&cTu es déja au spawn du monde &esurvie"
+			

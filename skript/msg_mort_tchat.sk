@@ -1,0 +1,68 @@
+on damage of player:
+	if victim's world is "world" or "world_the_end" or "world_nether":		
+		damage cause is drowning:
+			if damage >= victim's health:
+				cancel event
+				send victim title "&cTU ES MORT" with subtitle "&bTu as été renvoyé au puit de vie" for 3 seconds
+				broadcast "&c[ ⚔ ] &a%victim% &best mort noyé"
+				set {back.%victim%} to location of victim
+				teleport victim to {warp.loby}
+				set victim's level to 1
+				heal victim
+				send "&bTu peux effectuer un &c/back &b pour revenir a ta position précédente" to victim
+				stop
+		damage cause is fall:
+			if damage >= victim's health:
+				cancel event
+				send victim title "&cTU ES MORT" with subtitle "&bTu as été renvoyé au puit de vie" for 3 seconds
+				broadcast "&c[ ⚔ ] &a%victim% &bà fait une chute mortel"
+				set {back.%victim%} to location of victim
+				teleport victim to {warp.loby}
+				set victim's level to 1
+				heal victim
+				send "&bTu peux effectuer un &c/back &b pour revenir a ta position précédente" to victim
+				stop
+		damage cause is player:
+			if damage >= victim's health:
+				cancel event
+				set {back.%victim%} to location of victim
+				set victim's level to 1
+				teleport victim to {warp.loby}
+				send victim title "&cTU ES MORT" with subtitle "&bTu as été renvoyé au puit de vie" for 3 seconds
+				broadcast "&c[ ⚔ ] &6%attacker% &bà tué &a%victim%"
+				heal victim
+				send "&bTu peux effectuer un &c/back &b pour revenir a ta position précédente" to victim
+				stop
+		damage cause is monster:
+			if damage > victim's health:
+				cancel event
+				set {back.%victim%} to location of victim
+				teleport victim to {warp.loby}
+				set victim's level to 1
+				send victim title "&cTU ES MORT" with subtitle "&bTu as été renvoyé au puit de vie" for 3 seconds
+				broadcast "&c[ ⚔ ] &6%attacker% &bà tué &a%victim%"
+				heal victim
+				send "&bTu peux effectuer un &c/back &b pour revenir a ta position précédente" to victim
+				stop
+		if damage cause is void:
+			if damage >= victim's health:
+				cancel event
+				send victim title "&cTU ES MORT" with subtitle "&bTu as été renvoyé au puit de vie" for 3 seconds
+				broadcast "&c[ ⚔ ] &a%victim% &best &cmort"
+				set {back.%victim%} to location of victim
+				set victim's level to 1
+				send "&bTu peux effectuer un &c/back &b pour revenir a ta position précédente" to victim
+				teleport victim to {warp.loby}
+				heal victim
+				stop		
+		else:
+			if damage >= victim's health:
+				cancel event
+				send victim title "&cTU ES MORT" with subtitle "&bTu as été renvoyé au puit de vie" for 3 seconds
+				broadcast "&c[ ⚔ ] &a%victim% &best &cmort"
+				set {back.%victim%} to location of victim
+				set victim's level to 1
+				send "&bTu peux effectuer un &c/back &b pour revenir a ta position précédente" to victim
+				teleport victim to {warp.loby}
+				heal victim
+				stop

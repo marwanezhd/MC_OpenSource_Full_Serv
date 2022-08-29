@@ -1,0 +1,6 @@
+on explosion:
+	if world is "world":
+		cancel event
+		create a safe explosion of force 2
+   
+   

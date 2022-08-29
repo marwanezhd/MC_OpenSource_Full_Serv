@@ -1,0 +1,54 @@
+# SPAWN DU PNJ BANQUE : 
+# /summon minecraft:villager ~ ~ ~ {Profession:5,CustomName:Banque,CustomNameVisible:1,NoAI:1b,Silent:1,Invulnerable:1,Age:0, Rotation:[60.0f,0.0f],NoAI:1}
+
+on rightclick on a villager:
+	if name of entity is "Banque":
+		cancel event
+		open chest with 3 rows named "              &bBanque" to player
+		wait 2 ticks
+		format slot 10 of player with chest named "&3Coffre &21" with lore "Accédez au coffre 1" to run [make console execute "/banque1 %player%"]
+		format slot 12 of player with chest named "&3Coffre &22" with lore "Accédez au coffre 2" to run [make console execute "/banque2 %player%"]
+		format slot 14 of player with chest named "&3Coffre &23" with lore "Accédez au coffre 3" to run [make console execute "/banque3 %player%"]
+		format slot 16 of player with chest named "&3Coffre &24" with lore "Accédez au coffre 4" to run [make console execute "/banque4 %player%"]
+			
+command /banque1 <player>:
+	executable by:console
+	trigger:
+		set {_inv} to chest with 6 rows named "&4Banque &6|| &3Coffre &21 &6||"
+		if {container::&4Banque &6|| &3Coffre &21 &6||::%arg 1%} is set:
+			set {_inv}'s serialized contents to {container::&4Banque &6|| &3Coffre &21 &6||::%arg 1%}
+		open {_inv} to arg 1
+		set {container::current::%arg 1%} to "&4Banque &6|| &3Coffre &21 &6||"
+		
+command /banque2 <player>:
+	executable by:console
+	trigger:
+		set {_inv} to chest with 6 rows named "&4Banque &6|| &3Coffre &22 &6||"
+		if {container::&4Banque &6|| &3Coffre &22 &6||::%arg 1%} is set:
+			set {_inv}'s serialized contents to {container::&4Banque &6|| &3Coffre &22 &6||::%arg 1%}
+		open {_inv} to arg 1
+		set {container::current::%arg 1%} to "&4Banque &6|| &3Coffre &22 &6||"
+		
+command /banque3 <player>:
+	executable by:console
+	trigger:
+		set {_inv} to chest with 6 rows named "&4Banque &6|| &3Coffre &23 &6||"
+		if {container::&4Banque &6|| &3Coffre &23 &6||::%arg 1%} is set:
+			set {_inv}'s serialized contents to {container::&4Banque &6|| &3Coffre &23 &6||::%arg 1%}
+		open {_inv} to arg 1
+		set {container::current::%arg 1%} to "&4Banque &6|| &3Coffre &23 &6||"
+		
+command /banque4 <player>:
+	executable by:console
+	trigger:
+		set {_inv} to chest with 6 rows named "&4Banque &6|| &3Coffre &24 &6||"
+		if {container::&4Banque &6|| &3Coffre &24 &6||::%arg 1%} is set:
+			set {_inv}'s serialized contents to {container::&4Banque &6|| &3Coffre &24 &6||::%arg 1%}
+		open {_inv} to arg 1
+		set {container::current::%arg 1%} to "&4Banque &6|| &3Coffre &24 &6||"
+		
+on inventory close:
+	if {container::current::%player%} is set:
+		if "%event-inventory%" is "inventory of <none>":
+			set {container::%{container::current::%player%}%::%player%} to event-inventory's serialized contents
+			clear {container::current::%player%}

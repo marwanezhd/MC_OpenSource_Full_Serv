@@ -1,0 +1,14 @@
+on death:
+	set {back.%player%} to location of player
+	send "&bTu peux effectuer un &c/back &b pour revenir a ta position précédente" to player
+		
+command /back:
+	trigger:
+		if world is "world" or "world_the_end" or "world_nether" or "loby" or "donjons":
+			set {backtmp.%player%} to location of player
+			teleport player at {back.%player%}
+			send "&bVous venez d'être téléporté à votre position &dprécédente" to player
+			wait 5 ticks
+			set {back.%player%} to {back_tmp.%player%}
+		else:
+			set action bar of player to "&cTu ne peux pas /back dans l'arène"

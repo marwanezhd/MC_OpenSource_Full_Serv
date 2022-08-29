@@ -1,0 +1,74 @@
+command /tptoggle:
+	trigger:
+		if {tptoggle.%player%} is not set:			
+			set {tptoggle.%player%} to "false"
+			send "&bvous avez &cdésactivé &bles demandes de &ctéléportation"
+		else if {tptoggle.%player%} is "false":
+			set {tptoggle.%player%} to "true"
+			send "&bvous avez &aactivé &bles demandes de &ctéléportation"
+		else if {tptoggle.%player%} is "true":			
+			set {tptoggle.%player%} to "false"
+			send "&bvous avez &cdesactivé &bles demandes de &ctéléportation"
+
+command /tpa [<player>]:
+	trigger:
+		if world is "world" or "world_the_end" or "world_nether":
+			if {teleport.%arg-1%.tpa} is set:
+				send "&bTu as déja envoyé une demande de téléportation il y a moins de &e30 &esecondes"
+				stop
+			if arg-1 is player:
+				send "&btu ne peux pas te &ctéléporter &bà &ctoi-même"
+				stop
+			if arg-1 is not set:
+				send "&b/tpa &c<pseudo>"
+			else if arg-1 is set:
+				if arg-1 is online:
+					if {tptoggle.%arg-1%} is "false":
+						send "&bse joueur a &cdésactivé &bles téléportations"
+					else:
+						set {back.%player%} to location of player
+						Send "&a%player% &bsouhaite se &ctéléporter à&b vous" to arg-1
+						Send "&bDemande de téléporatation envoyé à &a%arg 1%" to player
+						set {teleport.%arg-1%.tpa} to player
+						set {teleport.%arg-1%.request} to true
+				else if arg-1 is offline:
+					send "&a%{%arg 1%}% &best &cdéconnecté"
+		else:
+			set action bar of player to "&cTu ne peux pas /tpa <Joueur> dans se monde"
+					
+command /tpyes:
+	trigger:
+		if world is "world" or "world_the_end" or "world_nether":
+			if {teleport.%player%.request} is true:			
+				if {teleport.%player%.tpa} is set:
+					teleport {teleport.%player%.tpa} to player
+					send "&bvous êtes téléporté à &a%player%" to {teleport.%player%.tpa}
+					send "&a%{teleport.%player%.tpa}% &bà été &ctéléporté &bà vous"
+					clear {teleport.%player%.tpa}
+					clear {teleport.%player%.request}
+				else if {teleport.%player%.tpahere} is set:
+					teleport player to {teleport.%player%.tpahere}
+					send "&bvous etes téléporté à &a%{%player%}%" to {teleport.%player%.tpa}
+					send "&a%{teleport.%player%.tpa}% &bà été &ctéléporté &bà vous"
+					clear {teleport.%player%.tpahere}
+					clear {teleport.%player%.request}
+			else:
+				send "&caucune demande de téléportation"
+		else:
+			set action bar of player to "&cTu ne peux pas /tpyes dans se monde"
+			
+command /tpno:
+	trigger:
+		if {teleport.%player%.request} is true:
+			if {teleport.%player%.tpa} is online:
+				send "&bDemande de téléportation &crefusée"
+				send "&bDemande de téléportation &crefusée" to {teleport.%player%.tpa}
+				clear {teleport.%player%.tpa}
+				clear {teleport.%player%.request}
+			else if {teleport.%player%.tpahere} is online:
+				send "&bDemande de téléportation acceptée" to {teleport.%player%.tpahere}
+				send "&cDemande de téléportation refusée"
+				clear {teleport.%player%.tpahere}
+				clear {teleport.%player%.request}
+		else:
+			send "&caucune &bdemande de téléportation"

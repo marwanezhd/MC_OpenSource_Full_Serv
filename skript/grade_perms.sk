@@ -1,0 +1,88 @@
+command /grade [<offline player>] [<text>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]" or "&9[Chef-Modérateur]":
+			if arg 1 is set:
+				if arg 2 is "joueur":
+					if {grade.%uuid of arg 1%} is "&a[Joueur]":
+						send "&cCe joueur possède déja le grade &a[Joueur]" to player
+					if {grade.%uuid of player%} is "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+						if {grade.%uuid of arg 1%} is "&4[Fondateur]" or "&c[Administrateur]" or "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+							send "Vous ne pouvez pas faire ca" to player
+							stop
+						else:
+							set {grade.%uuid of arg 1%} to "&a[Joueur]"
+							send "&b%arg 1% &cajouté au Grade &a[Joueur]" to player
+							send "%player% &5Vous avez été promus %{grade.%uuid of arg 1%}%" to arg 1
+							set arg 1 tab name to "%{grade.%uuid of arg 1%}% &e%arg 1%"
+					else:
+						set {grade.%uuid of arg 1%} to "&a[Joueur]"
+						send "&b%arg 1% &cajouté au Grade &a[Joueur]" to player
+						send "%player% &5Vous avez été promus %{grade.%uuid of arg 1%}%" to arg 1
+						set arg 1 tab name to "%{grade.%uuid of arg 1%}% &e%arg 1%"		
+				if arg 2 is "Modérateur" or "modérateur":
+					if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]" or "&9[Chef-Modérateur]":
+						if {grade.%uuid of arg 1%} is "&3[Modérateur]":
+							send "&cCe joueur possède déja le grade &3[Modérateur]" to player
+						if {grade.%uuid of player%} is "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+							if {grade.%uuid of arg 1%} is "&4[Fondateur]" or "&c[Administrateur]" or "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+								send "Vous ne pouvez pas faire ca" to player
+								stop
+						else:
+							set {grade.%uuid of arg 1%} to "&3[Modérateur]"
+							send "&b%arg 1% &cajouté au Grade &3[Modérateur]" to player
+							send "%player% &5Vous avez été promus %{grade.%uuid of arg 1%}%" to arg 1
+							set arg 1 tab name to "%{grade.%uuid of arg 1%}% &e%arg 1%"
+				if arg 2 is "Administrateur" or "administrateur":
+					if {grade.%uuid of player%} is "&4[Fondateur]":
+						if {grade.%uuid of arg 1%} is "&c[Administrateur]":
+							send "&cCe joueur possède déja le grade &c[Administrateur]" to player
+						if {grade.%uuid of player%} is "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+							if {grade.%uuid of arg 1%} is "&4[Fondateur]" or "&c[Administrateur]" or "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+								send "Vous ne pouvez pas faire ca" to player
+								stop
+						else:
+							set {grade.%uuid of arg 1%} to "&c[Administrateur]"
+							send "&b%arg 1% &cajouté au Grade &c[Administrateur]" to player
+							send "%player% &5Vous avez été promus %{grade.%uuid of arg 1%}%" to arg 1
+							set arg 1 tab name to "%{grade.%uuid of arg 1%}% &e%arg 1%"
+				if arg 2 is "Architecte" or "architecte":
+					if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]" or "&d[Resp-Architecte]":
+						if {grade.%uuid of arg 1%} is "&e[Architecte]":
+							send "&cCe joueur possède déja le grade &e[Architecte]" to player
+						if {grade.%uuid of player%} is "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+							if {grade.%uuid of arg 1%} is "&4[Fondateur]" or "&c[Administrateur]" or "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+								send "Vous ne pouvez pas faire ca" to player
+								stop
+						else:
+							set {grade.%uuid of arg 1%} to "&e[Architecte]"
+							send "&b%arg 1% &cajouté au Grade &e[Architecte]" to player
+							send "%player% &5Vous avez été promus %{grade.%uuid of arg 1%}%" to arg 1
+							set arg 1 tab name to "%{grade.%uuid of arg 1%}% &e%arg 1%"
+				if arg 2 is "Fondateur" or "fondateur":
+					if {grade.%uuid of player%} is "&4[Fondateur]":
+						if {grade.%uuid of arg 1%} is "&4[Fondateur]":
+							send "&cCe joueur possède déja le grade &4[Fondateur]" to player
+						if {grade.%uuid of player%} is "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+							if {grade.%uuid of arg 1%} is "&4[Fondateur]" or "&c[Administrateur]" or "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+								send "Vous ne pouvez pas faire ca" to player
+								stop
+						else:
+							set {grade.%uuid of arg 1%} to "&4[Fondateur]"
+							send "&b%arg 1% &cajouté au Grade &4[Fondateur]" to player
+							send "%player% &5Vous avez été promus %{grade.%uuid of arg 1%}%" to arg 1
+							set arg 1 tab name to "%{grade.%uuid of arg 1%}% &e%arg 1%"
+				if arg 2 is "Chef-Modo" or "Chef-Modérateur":
+					if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+						if {grade.%uuid of arg 1%} is "&9[Chef-Modérateur]":
+							send "&cCe joueur possède déja le grade &9[Chef-Modérateur]" to player
+						if {grade.%uuid of player%} is "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+							if {grade.%uuid of arg 1%} is "&4[Fondateur]" or "&c[Administrateur]" or "&d[Resp-Architecte]" or "&9[Chef-Modérateur]":
+								send "Vous ne pouvez pas faire ca" to player
+								stop
+						else:
+							set {grade.%uuid of arg 1%} to "&9[Chef-Modérateur]"
+							send "&b%arg 1% &cajouté au Grade &9[Chef-Modérateur]" to player
+							send "%player% &5Vous avez été promus %{grade.%uuid of arg 1%}%" to arg 1
+							set arg 1 tab name to "%{grade.%uuid of arg 1%}% &e%arg 1%"
+		else:
+			send "&cVous ne pouvez pas faire ca" to player

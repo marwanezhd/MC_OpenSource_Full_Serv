@@ -1,0 +1,89 @@
+options:               
+    PrefixAmi: &f[&6Amis&f]
+
+command /ami [<text=help>] [<player>]:
+    aliases: ami, friend
+    trigger:
+        if arg 1 is "info":
+            send "&6-----------------------------" to player
+            send "&6Aide: Amis" to player
+            send "&e/ami list &f- Affier la liste d'amis" to player
+            send "&e/ami add &b<pseudo> &f- Ajouter un ami" to player
+            send "&e/ami del &b<pseudo> &f- Supprimer un ami"
+            send "&6-----------------------------" to player
+        if arg 1 is "list":
+            open chest with 6 rows named "&6Liste d'amis   &e/ami add &b<pseudo>" to player
+            wait a tick
+            set {_slot} to 0
+            loop {ami.%player's uuid%::*}:
+                set {_p} to loop-value parsed as offline player
+                if {_p} is offline:
+                    set {_serveurp} to ""
+                    set {_statut} to "&cDéconnecté"
+                    format slot {_slot} of player with {_p}'s skull named "&b%{_p}%" with lore "%{_statut}%" to be unstealable
+                else:
+                    set {_serveurp} to "&fServeur: &b%player's world%"
+                    set {_statut} to "&aConnecté"
+                    format slot {_slot} of player with {_p}'s skull named "&b%{_p}%" with lore "%{_statut}%||%{_serveurp}%||||&a> &fClic gauche pour rejoindre||&a> &fClic droit pour inviter dans le groupe" to be unstealable
+                add 1 to {_slot}
+        if arg 1 is "add":
+            set {_p} to player
+            if arg 2 is set:
+                if arg 2 is "%player%":
+                    send "&cErreur: Vous ne pouvez pas devenir votre ami !" to player
+                    stop
+                if {demande-amis.%arg 2%} = "%player%":
+                    send "{@PrefixAmi} Une demande d'amis a été envoyé à &b%arg 2% &f!" to player
+                    stop
+                if "%{amiuuid.%player's uuid%::*}%" contains "%UUID of arg 2%":
+                    send "&cCe joueur est déjà votre ami !" to player
+                    stop
+                if arg 2 is offline:
+                    send "&cErreur: ""%arg 2%"" n'est pas connecté !" to player
+                    stop
+                else:
+                    send "{@PrefixAmi} Une demande d'amis a été envoyé à &b%Arg 2% &f!" to player
+                    send "&6-----------------------------" to arg 2
+                    send "{@PrefixAmi} &b%player% &fveut devenir votre ami voulez-vous aussi ?" to arg 2
+                    make console execute command "/tellraw %arg 2% ["""",{""text"":""          &a[Oui]"",""clickEvent"":{""action"":""run_command"",""value"":""/ami accepte %player%""},""hoverEvent"":{""action"":""show_text"",""value"":""&fDevenir ami avec %player%""}}]"
+                    make console execute command "/tellraw %arg 2% ["""",{""text"":""          &c[Non]"",""clickEvent"":{""action"":""run_command"",""value"":""/ami decline""},""hoverEvent"":{""action"":""show_text"",""value"":""&fNe pas devenir ami avec %player%""}}]"
+                    send "&6-----------------------------" to arg 2
+                    set {demande-amis.%arg 2%} to "%player%"
+                    wait 1 minute
+                    if {demande-amis.%arg 2%} is set:
+                        make arg 2 execute command "/ami decline"
+        if arg 1 is "accepte":
+            set {_p} to arg 2
+            if {demande-amis.%player%} isn't set:
+                send "{@PrefixAmi} &cVous n'avez aucune demande d'ami." to player
+                stop
+            add "%arg 2%" to {ami.%player's uuid%::*}
+            add "%UUID of arg 2%" to {amiuuid.%player's uuid%::*}
+            add "%player%" to {ami.%UUID of arg 2%::*}
+            add "%player's uuid%" to {amiuuid.%UUID of arg 2%::*}
+            send "{@PrefixAmi} &aVous êtes &aà présent &fami avec &b%arg 2% &f!" to player
+            send "{@PrefixAmi} &aVous êtes &aà présent &fami avec &b%player% &f!" to arg 2
+            delete {demande-amis.%player%}
+        if arg 1 is "decline":
+            if {demande-amis.%player%} is not set:
+                send "&cVous n'avez pas de demande d'ami..." to player
+                stop
+            message "{@PrefixAmi} &cVous avez refusé cette demande d'ami."
+            message "{@PrefixAmi} &b%player% &ca refusé votre demande d'ami." to arg 2
+            delete {demande-amis.%player%}
+        if arg 1 is "del":
+            if arg 2 is set:
+                if arg 2 is player:
+                    send "&cVous ne pouvez pas vous supprimer de vos amis, voyons !" to player
+                    stop
+                else if "%{amiuuid.%player's uuid%::*}%" contains "%UUID of arg 2%":
+                    send "{@PrefixAmi} &cVous avez supprimé &b%arg 2% &cde vos amis." to player
+                    send "{@PrefixAmi} &b%player% &cvous a supprimé de sa liste d'amis." to arg 2
+                    remove "%arg 2%" from {ami.%player's uuid%::*}
+                    remove "%UUID of arg 2%" from {amiuuid.%player's uuid%::*}
+                    remove "%player%" from {ami.%UUID of arg 2%::*}
+                    remove "%player's uuid%" from {amiuuid.%UUID of arg 2%::*}
+                    stop
+                else:
+                    send "&cErreur: Vous n'êtes pas amis avec ""%arg 2%""" to player
+                    stop

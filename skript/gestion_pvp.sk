@@ -1,0 +1,371 @@
+on damage of player:
+	if attacker is a player:
+		if attacker is in world "world":
+			cancel event
+			
+on damage of player:
+	if attacker is in world "loby":
+		cancel event
+		
+		
+on damage of player:
+	if attacker is a player:
+		if attacker is in world "world_the_end":
+			cancel event
+		
+		
+on damage of player:
+	if attacker is in world "world_nether":
+		if attacker is a player:
+			if victim is a player:
+				cancel event
+
+on physics:
+	event-block is any crops or carrot block or potato block or beetroot block:
+		cancel event
+		wait 5 ticks
+		set the block below the event-block to farmland
+		stop
+	event-block is farmland:
+		cancel event
+		stop
+
+on rightclick on a villager:
+	if name of entity is "Arene":
+		cancel event
+		open chest with 1 rows named "      &6Téléportation &6Arène" to player
+		wait 2 ticks
+		format slot 3 of player with green wool named "&bSpawn &6Arène" with lore "" to close then run [make console execute "/aarene %player%"]
+		format slot 5 of player with red wool named "&cFermer" with lore "" to close
+				
+command /aarene [<player>]:
+	executable by:console
+	trigger:
+		send "&6L'arène ouvrira très prochainement" to arg 1
+		#teleport arg 1 to {warp.arene}
+		#set {pvp_zonepvp.%arg 1%} to false
+
+# /summon minecraft:villager ~ ~ ~ {Profession:5,CustomName:Teleporteur,CustomNameVisible:1,NoAI:1b,Silent:1,Invulnerable:1,Age:0, Rotation:[60.0f,0.0f],NoAI:1}
+				
+on rightclick on a villager:
+	if name of entity is "Teleporteur":
+		cancel event
+		open chest with 1 rows named "      &6Téléportation &2Survie" to player
+		wait 2 ticks
+		format slot 3 of player with green wool named "&bSpawn &aSurvie" with lore "" to run [make console execute "/tploby %player%"]
+		format slot 5 of player with red wool named "&cFermer" with lore "" to close
+		
+command /tploby [<player>]:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.loby}
+		send arg 1 title "" with subtitle "&6Spawn &aSurvie" for 3 seconds
+		set action bar of arg 1 to "&bVous êtes au &6Spawn &aSurvie"
+		set {pvp_zonepvp.%arg 1%} to false
+		
+# /summon minecraft:villager ~ ~ ~ {Profession:5,CustomName:General,CustomNameVisible:1,NoAI:1b,Silent:1,Invulnerable:1,Age:0, Rotation:[60.0f,0.0f],NoAI:1}
+
+on rightclick on a villager:
+	if name of entity is "General":
+		cancel event
+		open chest with 1 rows named "              &bBanque" to player
+		wait 2 ticks
+		format slot 0 of player with green wool named "&bCamp &aVert" with lore "" to run [make console execute "/c1 %player%"]
+		format slot 2 of player with purple wool named "&bCamp &5Violet" with lore "" to run [make console execute "/c2 %player%"]
+		format slot 4 of player with red wool named "&bCamp &cRouge" with lore "" to run [make console execute "/c3 %player%"]
+		format slot 6 of player with blue wool named "&bCamp &3Bleu" with lore "" to run [make console execute "/c4 %player%"]
+		format slot 8 of player with chest named "&6Retour loby" with lore "&eTéléportation au Spawn" to run [make console execute "/q1 %player%"]
+
+command /q1 <player>:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.loby}
+		set {pvp_zonepvp.%arg 1%} to false
+		set action bar of arg 1 to "&bVous êtes au &6Spawn"
+		
+command /c1 <player>:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.camp1}
+		set {pvp_zonepvp.%arg 1%} to false
+		send arg 1 title "&bCamp &2Vert" with subtitle "&ePvP &aDésactivé" for 3 seconds
+		set action bar of arg 1 to "&bBienvenue au Camp &aVert"
+				
+command /c2 <player>:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.camp2}
+		set {pvp_zonepvp.%arg 1%} to false
+		send arg 1 title "&bCamp &5Violet" with subtitle "&ePvP &aDésactivé" for 3 seconds
+		set action bar of arg 1 to "&bBienvenue au Camp &5Violet"
+		
+command /c3 <player>:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.camp3}
+		set {pvp_zonepvp.%arg 1%} to false
+		send arg 1 title "&bCamp &4Rouge" with subtitle "&ePvP &aDésactivé" for 3 seconds
+		set action bar of arg 1 to "&bBienvenue au Camp &cRouge"
+		
+command /c4 <player>:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.camp4}
+		set {pvp_zonepvp.%arg 1%} to false
+		send arg 1 title "&bCamp &1Bleu" with subtitle "&ePvP &aDésactivé" for 3 seconds
+		set action bar of arg 1 to "&bBienvenue au Camp &3Bleu"
+
+on break:
+	if {grade.%uuid of player%} is not "&4[Fondateur]" or "&c[Administrateur]":
+		if world is "arene":
+			cancel event
+	
+on place:
+	if {grade.%uuid of player%} is not "&4[Fondateur]" or "&c[Administrateur]":
+		if world is "arene":	
+			cancel event
+		
+on right click with water bucket:
+	if player's world is "arene":
+		cancel event
+		stop
+
+on right click with lava bucket:	
+	if player's world is "arene":
+		cancel event
+		stop
+	
+on right click with flint and steel:	
+	if player's world is "arene":
+		cancel event
+		stop
+
+
+on right click with firework:	
+	if player's world is "arene":
+		cancel event
+		set action bar of player to "&cTu ne peux pas utiliser cet item dans se monde"
+		stop		
+
+on damage of player:
+	if victim's world is "arene":
+		if {pvp_zonepvp.%attacker%} is false:
+			cancel event
+			set action bar of attacker to "&ePvP &aDésactivé"
+			stop
+		if {pvp_zonepvp.%victim%} is false:
+			cancel event
+			set action bar of attacker to "&ePvP &aDésactivé"
+			stop
+		# mise en combat de l attaquant et de la victime ( temps de refférence pour le calcul des backs combats/déco combat
+		set {combat.%victim%} to now
+		set {combat.%attacker%} to now
+		if damage >= victim's health:
+			cancel event
+			strike lightning at victim's location
+			send victim title "&cTU ES MORT" with subtitle "&bTu as été renvoyé au puit de vie" for 3 seconds
+			set {back.%victim%} to location of victim
+			drop all items in victim's inventory at {back.%victim%}
+			clear victim's inventory
+			set victim's level to 1
+			send "&6%attacker% &evous à tué" to victim
+			send "&6Vous avez tué &e%victim%" to attacker
+			teleport victim to {warp.arene}
+			set {pvp_zonepvp.%victim%} to false
+			heal victim
+			stop
+
+on damage:
+	if victim's world is "arene":
+		damage was caused by lightning:
+			cancel event
+
+on quit:
+	if player's world is "arene":
+		if difference between {combat.%player%} and now < 30 seconds:
+			set {dc_combat.%player%} to location of player
+			drop all items in player's inventory at {dc_combat.%player%}
+			clear player's inventory
+			
+on walk on green wool:
+	if player's world is "arene":
+		if difference between {combat.%player%} and now < 30 seconds:
+			set {_diff} to difference between {combat.%player%} and now
+			set action bar of player to "&cTu n'est plus en combat depuis &e%{_diff}% &7/ &b30 &eseconds"
+			stop
+		teleport player to {warp.camp1}
+		set {pvp_zonepvp.%player%} to false
+		send player title "&bCamp &2Vert" with subtitle "&ePvP &aDésactivé" for 3 seconds
+				
+on walk on purple wool:
+	if player's world is "arene":
+		if difference between {combat.%player%} and now < 30 seconds:
+			set {_diff} to difference between {combat.%player%} and now
+			set action bar of player to "&cTu n'est plus en combat depuis &e%{_diff}% &7/ &b30 &eseconds"
+			stop
+		teleport player to {warp.camp2}
+		set {pvp_zonepvp.%player%} to false
+		send player title "&bCamp &5Violet" with subtitle "&ePvP &aDésactivé" for 3 seconds
+		
+on walk on red wool:
+	if player's world is "arene":
+		if difference between {combat.%player%} and now < 30 seconds:
+			set {_diff} to difference between {combat.%player%} and now
+			set action bar of player to "&cTu n'est plus en combat depuis &e%{_diff}% &7/ &b30 &eseconds"
+			stop
+		teleport player to {warp.camp3}
+		set {pvp_zonepvp.%player%} to false
+		send player title "&bCamp &4Rouge" with subtitle "&ePvP &aDésactivé" for 3 seconds
+	
+on walk on blue wool:
+	if player's world is "arene":
+		if difference between {combat.%player%} and now < 30 seconds:
+			set {_diff} to difference between {combat.%player%} and now
+			set action bar of player to "&cTu n'est plus en combat depuis &e%{_diff}% &7/ &b30 &eseconds"
+			stop
+		teleport player to {warp.camp4}
+		set {pvp_zonepvp.%player%} to false
+		send player title "&bCamp &1Bleu" with subtitle "&ePvP &aDésactivé" for 3 seconds
+		
+#/summon minecraft:villager ~ ~ ~ {Profession:5,CustomName:Garde,CustomNameVisible:1,NoAI:1b,Silent:1,Invulnerable:1,Age:0, Rotation:[60.0f,0.0f],NoAI:1}
+on rightclick on a villager:
+	if name of entity is "Garde_Vert":
+		cancel event
+		open chest with 1 rows named "      &6Aller au combat ?" to player
+		wait 2 ticks
+		format slot 2 of player with iron sword named "&2Oui" with lore "&eTéléportation en zone &cpvp" to run [make console execute "/warvert %player%"]		
+		format slot 6 of player with red wool named "&cNon" with lore "&6Ne pas y aller" to close		
+	if name of entity is "Garde_Violet":
+		cancel event
+		open chest with 1 rows named "      &6Aller au combat ?" to player
+		wait 2 ticks
+		format slot 2 of player with iron sword named "&2Oui" with lore "&eTéléportation en zone &cpvp" to run [make console execute "/warviolet %player%"]		
+		format slot 6 of player with red wool named "&cNon" with lore "&6Ne pas y aller" to close		
+	if name of entity is "Garde_Rouge":
+		cancel event
+		open chest with 1 rows named "      &6Aller au combat ?" to player
+		wait 2 ticks
+		format slot 2 of player with iron sword named "&2Oui" with lore "&eTéléportation en zone &cpvp" to run [make console execute "/warrouge %player%"]		
+		format slot 6 of player with red wool named "&cNon" with lore "&6Ne pas y aller" to close		
+	if name of entity is "Garde_Bleu":
+		cancel event
+		open chest with 1 rows named "      &6Aller au combat ?" to player
+		wait 2 ticks
+		format slot 2 of player with iron sword named "&2Oui" with lore "&eTéléportation en zone &cpvp" to run [make console execute "/warbleu %player%"]		
+		format slot 6 of player with red wool named "&cNon" with lore "&6Ne pas y aller" to close
+		
+command /warvert <player>:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.warvert}
+		set {pvp_zonepvp.%arg 1%} to true
+		set action bar of arg 1 to "&ePvP &cactivé"
+
+command /warviolet <player>:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.warviolet}
+		set {pvp_zonepvp.%arg 1%} to true
+		set action bar of arg 1 to "&ePvP &cactivé"
+
+command /warrouge <player>:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.warrouge}
+		set {pvp_zonepvp.%arg 1%} to true
+		set action bar of arg 1 to "&ePvP &cactivé"
+
+command /warbleu <player>:
+	executable by:console
+	trigger:
+		teleport arg 1 to {warp.warbleu}
+		set {pvp_zonepvp.%arg 1%} to true
+		set action bar of arg 1 to "&ePvP &cactivé"
+		
+command /control:
+	trigger:
+		if {guilde_name.%player%} is set:
+			loop all players:
+				if loop-player's world is "arene":
+					send loop-player title "&eLa guilde &6%{guilde_name.%player%}%" with subtitle "&bcontrôle désormais le &eDrapeau !" for 3 seconds					
+		else:
+			loop all players:
+				if loop-player's world is "arene":
+					send loop-player title "&e%player%" with subtitle "&bcontrôle désormais le &eDrapeau !" for 3 seconds
+		
+on rightclick holding a ender pearl:
+	if player is in world "arene":
+		if {pvp_zonepvp.%player%} is false:
+			cancel event
+			stop
+		if difference between {ender_pvp_cd.%player%} and now < 10 seconds:
+			cancel event
+			set action bar of player to "&6Perle &een &ccooldown"
+			stop
+		else:
+			set {ender_pvp_cd.%player%} to now
+			stop
+
+every 1 hours in world "arene":
+	if {detenteur_du_flagg} is set:
+		delete {flagg_arene}
+		delete {detenteur_du_flagg}
+		delete {count_capture_flagg}
+		wait 5 ticks
+		loop all players:
+			send loop-player title "&bLe &6Drapeau" with subtitle "&bEst &2Dévérouillé &b!" for 3 seconds
+		stop
+	else:
+		loop all players:
+			send loop-player title "&bLe &6Drapeau" with subtitle "&bEst &2Dévérouillé &b!" for 3 seconds
+		stop
+				
+on walk on black wool:
+	if player is in world "arene":
+		if {detenteur_du_flagg} is not set:
+			if {flagg_arene} is not set:
+				set {flagg_arene} to "%player%"
+				set {flagg_arene_update.%player%} to now
+				create bossbar title "&6%{flagg_arene}% &eest sur la &bzone" and id "%player%" for player with value 10 with colors Green
+				stop
+			if {flagg_arene} is set:
+				if {flagg_arene} is "%player%":
+					if difference between {flagg_arene_update.%player%} and now > 1 minutes:
+						add 1 to {count_capture_flagg}
+						set {flagg_arene_update.%player%} to now
+						if {count_capture_flagg} = 1:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 10 with colors Green
+						if {count_capture_flagg} = 2:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 20 with colors Green
+						if {count_capture_flagg} = 3:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 30 with colors Green
+						if {count_capture_flagg} = 4:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 40 with colors Green
+						if {count_capture_flagg} = 5:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 50 with colors Green
+						if {count_capture_flagg} = 6:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 60 with colors Green
+						if {count_capture_flagg} = 7:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 70 with colors Green
+						if {count_capture_flagg} = 8:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 80 with colors Green
+						if {count_capture_flagg} = 9:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 90 with colors Green
+						if {count_capture_flagg} = 10:
+							create bossbar title "&2%{flagg_arene}% &6%{count_capture_flagg}% &7/ &b10" and id "%player%" for player with value 100 with colors Green						
+						if {count_capture_flagg} >= 10:
+							set {detenteur_du_flagg} to "%player%"
+							set {count_capture_flagg} to 0
+							loop all players:
+								if loop-player's world is "arene":
+									send loop-player title "&e%{detenteur_du_flagg}%" with subtitle "&bcontrôle désormais le &eDrapeau !" for 3 seconds
+							stop
+				else:
+					set {count_capture_flagg} to 0
+					set {flagg_arene} to "%player%"
+					set {flagg_arene_update.%player%} to now
+					# afficher la bossbar de progression
+		if {detenteur_du_flagg} is set:
+			# afficher la bossbar avec le nom du detenteur et le timeur de deverouillage du flagg
+			add 1 to {point_flagg_controle_pvp.%player%}
+			create bossbar title "&6%{detenteur_du_flagg}% &eContrôle la &bzone" and id "%player%" for player with value 100 with colors Green

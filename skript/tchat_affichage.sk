@@ -1,0 +1,55 @@
+on chat:
+	if {afreeze.%player%} is false:
+		if {time_mute.%player%} is set:
+			set {_verif_sanction} to difference between {moment_mute.%player%} and now
+			if {_verif_sanction} >=  {time_mute.%player%}:
+				cancel event
+				delete {time_mute.%player%}
+				delete {moment_mute.%player%}
+				broadcast "%{grade.%uuid of player%}% &7%player% : &f%message%"
+				stop
+			else:
+				cancel event
+				send "tu as été mute par %{modo_mute.%player%}% le %{moment_mute.%player%}% pour une durée de %{time_mute.%player%}% Raison : %{motif_mute.%player%}%" to player
+				stop	
+		if {guilde_name.%player%} is set:
+			if {grade.%uuid of player%} is "&a[Joueur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &6[%{guilde_name.%player%}%] &7%player% : &f%message%"
+			if {grade.%uuid of player%} is "&3[Modérateur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &6[%{guilde_name.%player%}%] &7%player% : &f%message%"
+			if {grade.%uuid of player%} is "&c[Administrateur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &6[%{guilde_name.%player%}%] &7%player% : &f%message%"
+			if {grade.%uuid of player%} is "&e[Architecte]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &6[%{guilde_name.%player%}%] &7%player% : &f%message%"
+			if {grade.%uuid of player%} is "&9[Chef-Modérateur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &6[%{guilde_name.%player%}%] &7%player% : &f%message%"
+			if {grade.%uuid of player%} is "&4[Fondateur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &6[%{guilde_name.%player%}%] &7%player% : &f%message%"
+		else:
+			if {grade.%uuid of player%} is "&a[Joueur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &7%player% : &f%message%"
+			if {grade.%uuid of player%} is "&3[Modérateur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &7%player% : &f%message%"
+			if {grade.%uuid of player%} is "&c[Administrateur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &7%player% : &f%message%"
+			if {grade.%uuid of player%} is "&e[Architecte]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &7%player% : &f%message%"
+			if {grade.%uuid of player%} is "&4[Fondateur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &7%player% : &f%message%"			
+			if {grade.%uuid of player%} is "&9[Chef-Modérateur]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &7%player% : &f%message%"	
+			if {grade.%uuid of player%} is "&d[Resp-Architecte]":
+				cancel event
+				broadcast "%{grade.%uuid of player%}% &7%player% : &f%message%"	

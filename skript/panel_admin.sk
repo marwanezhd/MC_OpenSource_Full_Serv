@@ -1,0 +1,100 @@
+command /redebug:
+	executable by: console
+	trigger:
+		set {maintenance} to false
+		send "&cmode ouverture d'urgence"
+
+command /paneladmin:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			if {maintenance} is true:
+				open chest with 4 rows named "&c[Panel Administration]" to player
+				wait 2 ticks
+				format slot 2 of player with feather named "&bActiver le mode &4maintenance" with lore "&6Seuls les Administrateurs ||&6auront accès au serveur" to close then run [make player execute "/maintenanceerroroff"]
+				format slot 4 of player with red wool named "&eStatut du serveur&c:" with lore "&4[Maintenance]" to be unstealable
+				format slot 6 of player with feather named "&bDésactiver le mode &4maintenance" with lore "&6Tous les joueurs ||&6auront accès au serveur" to close then run [make player execute "/maintenance off"]
+				format slot 20 of player with feather named "&eActiver " with lore "&6voir les msg privé ||&6des joueurs" to close then run [make player execute "/adminshowon"]
+				format slot 22 of player with feather named "&e " with lore "&6 ici ce sera||&6l etat de la perm" to be unstealable
+				format slot 24 of player with feather named "&cDésactiver " with lore "&6Ne plus voir ||&6les msg privé des joueurs" to close then run [make player execute "/adminshowoff"]				
+			if {maintenance} is false:
+				open chest with 4 rows named "&c[Panel Administration]" to player
+				wait 2 ticks
+				format slot 2 of player with feather named "&bActiver le mode &4maintenance" with lore "&6Seuls les Administrateurs ||&6auront accès au serveur" to close then run [make player execute "/maintenance on"]
+				format slot 4 of player with green wool named "&eStatut du serveur&c:" with lore "&2 [Ouvert]" to be unstealable
+				format slot 6 of player with feather named "&bDésactiver le mode &4maintenance" with lore "&6Tous les joueurs ||&6auront accès au serveur" to close then run [make player execute "/maintenanceerroron"]
+				format slot 20 of player with feather named "&eActiver " with lore "&6voir les msg privé ||&6des joueurs" to close then run [make player execute "/adminshowon"]
+				format slot 22 of player with feather named "&e " with lore "&6 ici ce sera||&6l etat de la perm" to be unstealable
+				format slot 24 of player with feather named "&cDésactiver " with lore "&6Ne plus voir ||&6les msg privé des joueurs" to close then run [make player execute "/adminshowoff"]		
+		else:
+			send "&cVous n'avez pas la permission de faire ca" to player
+
+command /maintenanceerroron:
+	trigger:
+		if {grade.%uuid of player%} is "&c[Administrateur]" or "&4[Fondateur]":
+			send "&bLe serveur est déja &eouvert &baux joueurs" to player
+			wait 2 ticks
+			make player execute "/maintenance on"
+
+command /maintenanceerroroff:
+	trigger:
+		if {grade.%uuid of player%} is "&c[Administrateur]" or "&4[Fondateur]":
+			send "&bLe serveur est déja en &4maintenance" to player
+			make player execute "/maintenance on"
+
+command /maintenance <text>:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			if arg 1 is "on":
+				set {maintenance} to true
+				if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+					send "&4Le serveur vient de passer en mode maintenance , seul les Membres du staff ont actuellement accès au serveur" to player
+					broadcast "&cLe serveur va redémarrer automatiquement dans 10 secondes , mettez vous à l'abris"
+					loop all players:
+						wait 10 seconds
+						send player title "&410" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "&49" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "&48" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "&47" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "&46" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "&45" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "&44" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "&43" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "&42" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "&41" with subtitle "Avant fermeture" for 1 seconds
+						wait 1 seconds
+						send player title "" with subtitle "&bArrêt du serveur" for 3 seconds
+						wait 1 seconds
+						kick players due to "&4Le serveur vient de passer en maintenance , plus d'info sur : site"
+						stop
+				else:
+					send "&cVous n'avez pas la permission de faire ca" to player
+			if arg 1 is "off":
+				set {maintenance} to false
+				send "&bLe serveur a quitté le mode &4maintenance &b, tous les joueurs ont de nouveau accès au serveur" to player
+			else:
+				send "&b/maintenance &c<on/off>" to player
+		else:
+			send "&cVous n'avez pas la permission de faire ca" to player
+
+on join:
+	if {maintenance} is true:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]" or "&9[Chef-Modérateur]" or "&3[Modérateur]":
+			send "&bLe serveur est actuellement en mode &5Développement" to player
+			send "&cEn tant que membre du staff vous avez accès au serveur durant sa phase de développement" to player
+		else:
+			kick player due to "&4Le serveur est actuellement en Maintenance Seul les membres du staff peuvent y accèder"
+		
+on server ping:
+	if {maintenance} is true:
+		set motd to "&a&lGENESE &8[&2&lSURVIE &8/ &c&lPVP&8]                      &7[&61.12.2&7]                    &7[&c&lMaintenance en cours&7]"
+	if {maintenance} is false:
+		set motd to "&a&lGENESE &8[&2&lSURVIE &8/ &c&lPVP&8]                      &7[&61.12.2&7]                    &a&lRejoins &2nous !"

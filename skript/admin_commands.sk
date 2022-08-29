@@ -1,0 +1,18 @@
+command /s [<player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]" or "&9[Chef-Modérateur]":			
+			set {back.%arg 1%} to location of arg 1
+			teleport arg 1 to player
+			send "&c%player% &bvous &bà téléporté à lui" to arg 1
+			send "&bVous avez téléporté &c%arg 1% &bà vous" to player
+		else:
+			send "&cVous n'avez pas la permission de faire ca" to player
+			
+command /tp [<player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&aJoueur":
+			send "&cVous ne pouvez pas faire ca" to player
+			stop
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]" or "&9[Chef-Modérateur]":
+			set {back.%player%} to location of player
+			teleport player to arg 1			

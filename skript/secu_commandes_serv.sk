@@ -1,0 +1,553 @@
+# bloquage de la suite de commande mv
+on command "/mv":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/kill":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/w":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/ver":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/version":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/!":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/help":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/kick":
+	if {grade.%uuid of player%} is "&a[Joueur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/reload":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/sk":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player		
+		
+on command "/pl":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/give":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/effect":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player	
+		
+on command "/clear":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/summon":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player	
+		
+on command "/stop":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/ban":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/banip":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/xp":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/enchant":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player		
+		
+on command "/defaultgamemode":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player		
+
+on command "/execute":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player	
+				
+on command "/gamerule":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player	
+		
+on command "/locate":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player					
+
+on command "/publish":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player			
+		
+on command "/playsound":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player	
+		
+on command "/scoreboard":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player	
+		
+on command "/seed":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player		
+	
+on command "/setworldspawn":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player		
+	
+on command "/spawnpoint":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player		
+		
+on command "/tellraw":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/teleport":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player			
+		
+on command "/setblock":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player	
+
+on command "/time":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player	
+
+on command "/trigger":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+	
+on command "/weather":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/tell":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player		
+		
+on command "/blockdata":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player	
+		
+on command "/me":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/stopsound":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/banlist":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/mute":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/list":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/deop":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/op":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/pardon":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/save-on":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/whitelist":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/plugins":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/ver":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/tps":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/timings on":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/bukkit:pl":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/bukkit:plugins":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/bukkit:version":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/bukkit:ver":
+	if {grade.%uuid of player%} is "&a[Joueur]" or "&e[Architecte]" or "&3[Modérateur]" or "&9[Chef-Modérateur]" or "&d[Resp-Architecte]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/admauthme":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/save":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/minecraft":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/advancement":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/ban-ip":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/bossbar":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/clone":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+
+on command "/debug":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/difficulty":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/fill":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/forceload":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/worldborder":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/function":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/recipe":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/locate":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/testforblock":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/stopsound":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/title":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/time":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/particle":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/stats":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/replaceitem":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/testfor":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/entitydata":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/setworldspawn":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/toggledownfall":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/say":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/unban":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/broadcast":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player
+		
+on command "/data":
+	if {grade.%uuid of player%} is not "&4[Fondateur]":
+		cancel event
+		send "&cVous ne pouvez pas faire ca" to player

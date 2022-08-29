@@ -1,0 +1,31 @@
+on first join:
+	wait 5 seconds
+	give stone_pickaxe to player
+	give stone axe to player
+	give stone sword to player
+	give stone shovel to player	
+	give leather helmet to player
+	give leather chestplate to player
+	give leather leggings to player
+	give leather boots to player
+	give 15 torch to player
+	give 32 cooked beef to player	
+	set {kit_debutant.%player%} to now
+
+command /kit:
+	trigger:
+		if difference between {kit_debutant.%player%} and now < 3 hours:
+			send "&bTu ne peux obtenir le kit débutant que toutes les &c3 &bheures" to player
+		else:
+			give stone_pickaxe to player
+			give stone axe to player
+			give stone sword to player
+			give stone shovel to player
+			give leather helmet to player
+			give leather chestplate to player
+			give leather leggings to player
+			give leather boots to player
+			give 15 torch to player
+			give 12 cooked beef to player
+			set {kit_debutant.%player%} to now
+			send "&bKit débutant" to player

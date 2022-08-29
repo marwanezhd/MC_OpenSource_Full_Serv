@@ -1,0 +1,13 @@
+on join:
+	set {co_log.%player%} to now
+	
+on quit:
+	set {deco_log.%player%} to now
+	add difference between {co_log.%player%} and now to {time_log.%player%}
+	add difference between {co_log.%player%} and now to {semaine_time_log.%player%}
+	
+command /timelog [<offline player>]:
+	trigger:
+		if {grade.%uuid of player%} is not "&4[Fondateur]" or "&c[Administrateur]" or "&9[Chef-Modérateur]":
+			send "&6derniere co &7: &e%{co_log.%arg 1%}%   &6derniere deco &7: &e%{deco_log.%arg 1%}%" to player
+			send "&6Temps de connection total de %arg 1% &7: &e%{time_log.%arg 1%}%" to player

@@ -1,0 +1,9 @@
+on rightclick with tnt:
+	cancel event
+	send "&cMauvaise idée" to player
+	#add 1 to {tnt_try.%player%}
+	
+command /showtnt [<player>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]":
+			send "alertes &b%arg 1% = %{tnt_try.%arg 1%}%" to player

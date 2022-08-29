@@ -1,0 +1,75 @@
+command /sethome [<Text>]:
+	trigger:
+		if world is "world" or "world_the_end" or "world_nether":
+			if arg 1 is not set:
+				send "&b/sethome <Nom du home>" to player
+			if arg 1 is set:
+				if {count_home.%player%} >= 10:
+					send "&bTu ne peux pas créer de home suplémentaire" to player
+					send "&bTu possède déja &610 &bhomes" to player
+					stop
+				if {home.%player%.%arg%} is set:
+					set {home.%player%.%arg%} to location of player
+					set {arg 1} to arg 1
+					remove {arg 1} from {homelist.%player%::*}
+					wait 2 ticks
+					add {arg 1} to {homelist.%player%::*}
+					send "&bTu possède a présent &e%{count_home.%player%}% &bhomes" to player
+					send "&bTu as créer le home &5%arg%" to player
+					stop
+				if {count_home.%player%} < 10:
+					set {home.%player%.%arg%} to location of player
+					set {arg 1} to arg 1
+					remove {arg 1} from {homelist.%player%::*}
+					wait 2 ticks
+					add {arg 1} to {homelist.%player%::*}
+					add 1 to {count_home.%player%}
+					send "&bTu possède a présent &e%{count_home.%player%}% &bhomes" to player
+					send "&bTu as créer le home &5%arg%" to player
+					stop
+		else:
+			send "&cVous ne pouvez pas créer de home dans se monde" to player
+		
+command /home [<Text>]:
+	trigger:
+		if world is "world" or "world_the_end" or "world_nether":
+			if arg 1 is not set:
+				send "&bPour te téléporter a un de tes homes : /home <Nom du home>" to player
+			if arg 1 is set:
+				set {back.%player%} to location of player
+				wait 2 ticks
+				teleport player to {home.%player%.%arg%}
+				send "&bTéléportation au home &5%arg%" to player
+			if {home.%player%.%arg%} is not set:
+				send "&cAucun home ne porte se nom" to player
+			if {home.%player%.%arg%} is false:
+				send "&bLe home &5%arg% &bn'éxiste plus" to player		
+		else:
+			send "&cVous ne pouvez pas vous téléporter a votre home dans se monde" to player
+			
+command /delhome [<Text>]:
+	trigger:
+		if world is "world" or "world_the_end" or "world_nether":
+			if arg 1 is not set:
+				send "&bPrécise le &cNom &bdu home à &csupprimer" to player
+			if arg 1 is set:
+				if {count_home.%player%} <= 0:
+					set {count_home.%player%} to 0
+					send "&6Tu n'as aucun home" to player
+					stop
+				if {home.%player%.%arg%} is set:
+					if {home.%player%.%arg%} is not false:
+						set {home.%player%.%arg%} to false
+						remove {arg 1} from {homelist.%player%::*}
+						remove 1 from {count_home.%player%}
+						send "&bLe home &5%arg% &bvient d'être &csupprimé" to player
+						send "&bTu possède a présent &e%{count_home.%player%}% &bhomes" to player
+						stop
+			if arg 1 is "0":
+				send "&bLe home %arg% &bn'éxiste plus" to player
+		else:
+			send "&cVous ne pouvez pas gerer vos homes dans se monde" to player	
+			
+command /homelist:
+	trigger:
+		send "&bListe des homes : &e%{homelist.%player%::*}%" to player

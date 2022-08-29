@@ -1,0 +1,46 @@
+command /setwarp [<Text>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			if arg 1 is not set:
+				send "&b/setwarp <Nom du warp>" to player
+			if arg 1 is set:
+				set {warp.%arg%} to location of player
+				set {arg 1} to arg 1
+				add {arg 1} to {warplist::*}
+				send "&bTu as créer le warp &5%arg%" to player
+		else:
+			send "&cVous n'avez pas la permission pour créer un warp" to player
+			
+command /warp [<Text>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			if arg 1 is not set:
+				send "&bPour te téléporter a un warp : /warp <Nom du warp>" to player
+			if arg 1 is set:
+				set {back.%player%} to location of player
+				wait 2 ticks
+				teleport player to {warp.%arg%}
+				send "&bTéléportation au warp &5%arg%" to player
+			if {warp.%arg%} is not set:
+				send "&cAucun warp ne porte se nom" to player
+			if {warp.%arg%} is false:
+				send "&bLe warp &5%arg% &bn'éxiste plus" to player
+			
+command /delwarp [<Text>]:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			if arg 1 is not set:
+				send "&bPrécise le &cNom &bdu warp a &csupprimer" to player
+			if arg 1 is set:
+				set {warp.%arg%} to false
+				remove {arg 1} from {warplist::*}
+				send "&bLe warp &5%arg% &bvient d'être &csupprimé" to player
+			if arg 1 is "0":
+				send "&bLe warp %arg% &bn'éxiste plus" to player
+		else:
+			send "&cVous n'avez pas la permission pour supprimer un warp" to player
+			
+command /warplist:
+	trigger:
+		if {grade.%uuid of player%} is "&4[Fondateur]" or "&c[Administrateur]":
+			send "&b%{warplist::*}%" to player

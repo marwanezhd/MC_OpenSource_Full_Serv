@@ -1,0 +1,525 @@
+# degats joueurs:
+on damage of player:
+	if {guilde_name.%victim%} is set:
+		if victim's health = 10:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 100 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 9.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 95 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 9:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 90 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 8.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 85 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 8:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 80 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 7.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 75 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 7:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 70 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 6.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 65 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 6:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 60 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 5.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 55 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 50 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 4.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 45 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 4:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 40 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 3.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 35 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 3:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 30 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 2.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 25 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 2:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 20 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 1.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 15 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 1:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 10 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 0.5:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 5 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 0:
+			create bossbar title "%{grade.%uuid of victim%}% &6[%{guilde_name.%victim%}%] &7%victim%" and id "%attacker%" for attacker with value 0 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+	
+	
+	
+	if {guilde_name.%victim%} is not set:
+		if victim's health = 10:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 100 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 9.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 95 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 9:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 90 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 8.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 85 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 8:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 80 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 7.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 75 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 7:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 70 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 6.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 65 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 6:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 60 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 5.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 55 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 50 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 4.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 45 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 4:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 40 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 3.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 35 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 3:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 30 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 2.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 25 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 2:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 20 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 1.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 15 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 1:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 10 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 0.5:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 5 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 0:
+			create bossbar title "%{grade.%uuid of victim%}% &7%victim%" and id "%attacker%" for attacker with value 0 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+
+# sans guilde			
+	else:
+		if victim's health = 10:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 100 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 9.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 95 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 9:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 90 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 8.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 85 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 8:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 80 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 7.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 75 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 7:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 70 with colors Green
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 6.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 65 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 6:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 60 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 5.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 55 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 50 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 4.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 45 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 4:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 40 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 3.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 35 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 3:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 30 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 2.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 25 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 2:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 20 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 1.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 15 with colors Yellow
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 1:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 10 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 0.5:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 5 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+		if victim's health = 0:
+			create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 0 with colors Red
+			wait 1 seconds
+			hide bossbar "%attacker%"
+			stop
+
+
+# degats monstres
+on damage of monster:
+	if victim's health = 9:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 90 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 8.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 85 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 8:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 80 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 7.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 75 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 7:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 70 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 6.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 65 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 6:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 60 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 5.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 55 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 50 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 4.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 45 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 4:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 40 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 3.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 35 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 3:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 30 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 2.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 25 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 2:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 20 with colors Red
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 1.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 15 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 1:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 10 with colors Red
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 0.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 5 with colors Red
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 0:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 0 with colors Red
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+		
+		
+# degats entitées
+on damage of entity:
+	if victim's health = 9:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 90 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 8.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 85 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 8:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 80 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 7.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 75 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 7:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 70 with colors Green
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 6.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 65 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 6:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 60 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 5.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 55 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 50 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 4.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 45 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 4:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 40 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 3.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 35 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 3:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 30 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 2.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 25 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 2:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 20 with colors Red
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 1.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 15 with colors Yellow
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 1:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 10 with colors Red
+		wait 1 seconds
+		hide bossbar "%attacker%" 
+		stop
+	if victim's health = 0.5:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 5 with colors Red
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+	if victim's health = 0:
+		create bossbar title "&7%victim%" and id "%attacker%" for attacker with value 0 with colors Red
+		wait 1 seconds
+		hide bossbar "%attacker%"
+		stop
+
+		
